@@ -14,6 +14,11 @@
                 <input type="date" id="date" name="date" class="form-control" required>
             </div>
 
+            <div class="form-group mb-3">
+                <label for="saldo_awal">Saldo Awal</label>
+                <input type="text" id="saldo_awal" name="saldo_awal" class="form-control">
+            </div>
+
             <!-- Input untuk transaksi -->
             <div id="transactions-container">
                 <h3>Transaksi</h3>
@@ -137,16 +142,25 @@
                 const kasMasukFields = transactionGroup.querySelector('.kas-masuk-fields');
                 const kasKeluarFields = transactionGroup.querySelector('.kas-keluar-fields');
                 const statusSelect = transactionGroup.querySelector(
-                    'select[name^="transactions"][name$="[status]"]'); // Ambil status di dalam grup transaksi tersebut
+                    'select[name^="transactions"][name$="[status]"]'
+                    ); // Ambil status di dalam grup transaksi tersebut
 
                 const status = statusSelect.value;
 
                 if (status === 'KM') {
                     kasMasukFields.style.display = 'block';
                     kasKeluarFields.style.display = 'none';
+
+                    // Enable kas masuk fields and disable kas keluar fields
+                    kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
+                    kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
                 } else if (status === 'KK') {
                     kasMasukFields.style.display = 'none';
                     kasKeluarFields.style.display = 'block';
+
+                    // Enable kas keluar fields and disable kas masuk fields
+                    kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
+                    kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
                 }
             }
 

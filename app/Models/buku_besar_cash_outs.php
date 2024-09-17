@@ -12,7 +12,7 @@ class buku_besar_cash_outs extends Model
     protected $fillable = [
         'id_main_cash_trans',
         'kas',
-        'bank_s/p',
+        'bank_sp',
         'bank_induk',
         'simpan_pinjam',
         'inventaris',

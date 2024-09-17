@@ -45,23 +45,22 @@ class KasInduksController extends Controller
         $month_start = $date->format('m');
         $year_start = $date->format('Y');
 
-        Log::info('month start', [$month_start]);
-        Log::info('year start', [$year_start]);
-
         // Ambil saldo terakhir dari database
         $lastCash = main_cashs::latest('created_at')->first();
         $lastSaldo = $lastCash ? $lastCash->saldo : 0;
 
-        // Jika ini adalah entri pertama, gunakan saldo yang diinput oleh pengguna
-        // Jika tidak, gunakan saldo terakhir + saldo yang diinput
-        $isFirstEntry = !$lastCash; // Tidak ada data sebelumnya berarti ini adalah entri pertama
-
-        $newSaldo = $isFirstEntry ? $request->saldo : $lastSaldo + $request->saldo;
-
         $mainCash = new main_cashs();
         $mainCash->date = $date->format('Y-m-d');
-        // $mainCash->status = $request->status;
-        $mainCash->saldo = $newSaldo;
+        // Cek apakah saldo_awal diinput oleh user
+        if ($request->has('saldo_awal') && $request->saldo_awal !== null) {
+            // Jika saldo_awal diinput oleh user, gunakan saldo_awal dari input user
+            $mainCash->saldo_awal = $request->saldo_awal;
+            $mainCash->saldo = $request->saldo_awal;  // Juga gunakan untuk saldo
+        } else {
+            // Jika saldo_awal tidak diinput, gunakan saldo terakhir dari database
+            $mainCash->saldo_awal = $lastSaldo;
+            $mainCash->saldo = $lastSaldo;
+        }
         $mainCash->save();
 
         $periode = 1;
@@ -80,8 +79,6 @@ class KasInduksController extends Controller
                 $lastYear = $lastTransDate->format('Y');
                 $lastStatus = $lastTransaction->status;
 
-                Log::info('month Last', [$lastMonth]);
-                Log::info('year Last', [$lastYear]);
                 // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
                 if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
                     // Jika bulan dan tahun sama, increment periode dari entri terakhir
@@ -108,17 +105,10 @@ class KasInduksController extends Controller
             ]);
 
             if ($status === 'KM') {
-                LogSaldo::create([
-                    'main_cash_id' => $mainCash->id,
-                    'transaction_id' => $transaction->id,
-                    'old_saldo' => $mainCash->saldo,
-                    'new_saldo' => $mainCash->saldo + $transactionData['debet_transaction'],
-                    'action_type' => 'insert',
-                ]); 
 
                 $mainCash->update([
                     'saldo' => $mainCash->saldo + $transactionData['debet_transaction'],
-                ]);           
+                ]);
 
                 $mainCashInTransId = $transaction->id;
 
@@ -246,13 +236,6 @@ class KasInduksController extends Controller
                     }
                 }
             } elseif ($status === 'KK') {
-                LogSaldo::create([
-                    'main_cash_id' => $mainCash->id,
-                    'transaction_id' => $transaction->id,
-                    'old_saldo' => $mainCash->saldo,
-                    'new_saldo' => $mainCash->saldo - $transactionData['kredit_transaction'],
-                    'action_type' => 'insert',
-                ]);
 
                 $mainCash->update([
                     'saldo' => $mainCash->saldo - $transactionData['kredit_transaction'],
@@ -480,7 +463,6 @@ class KasInduksController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
     }
 
     /**
@@ -488,6 +470,5 @@ class KasInduksController extends Controller
      */
     public function destroy(string $id)
     {
-
     }
 }

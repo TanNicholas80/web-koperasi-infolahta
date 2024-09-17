@@ -12,7 +12,7 @@ class buku_besar_cash_ins extends Model
     protected $fillable = [
         'id_main_cash_trans',
         'kas',
-        'bank_s/p',
+        'bank_sp',
         'bank_induk',
         'piutang_uang',
         'piutang_barang_toko',
@@ -24,7 +24,7 @@ class buku_besar_cash_ins extends Model
         'sipanan_wajib',
         'sipanan_khusus',
         'sipanan_tunai',
-        'jasa_s/p',
+        'jasa_sp',
         'provinsi',
         'shu_puskop',
         'inv_usipa',
