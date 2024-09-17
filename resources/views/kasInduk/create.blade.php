@@ -66,7 +66,7 @@
 
                         <div class="form-group mb-3">
                             <label for="debet_transaction">Debet</label>
-                            <input type="text" name="transactions[0][debet_transaction]" class="form-control">
+                            <input type="text" name="transactions[0][debet_transaction]" class="form-control rupiah">
                         </div>
                     </div>
 
@@ -116,7 +116,7 @@
 
                         <div class="form-group mb-3">
                             <label for="kredit_transaction">Kredit</label>
-                            <input type="text" name="transactions[0][kredit_transaction]" class="form-control">
+                            <input type="text" name="transactions[0][kredit_transaction]" class="form-control rupiah">
                         </div>
                     </div>
 
@@ -193,6 +193,52 @@
             // Initialize existing transaction groups on page load
             const initialTransactionGroups = document.querySelectorAll('.transaction-group');
             initialTransactionGroups.forEach(group => initializeTransactionGroup(group));
+            
         });
+
+        // Function untuk memformat angka ke format rupiah
+    function formatRupiah(angka, prefix) {
+        var numberString = angka.replace(/[^,\d]/g, '').toString(),
+            split = numberString.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // Menambahkan titik jika yang diinput sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+    }
+
+    // Menghapus format rupiah untuk keperluan pengiriman data ke server
+    function cleanRupiah(value) {
+        return value.replace(/[^,\d]/g, '');
+    }
+
+    // Event listener untuk input class 'rupiah'
+    const rupiahInputs = document.querySelectorAll('.rupiah');
+    
+    rupiahInputs.forEach(input => {
+        input.addEventListener('keyup', function(e) {
+            input.value = formatRupiah(this.value, 'Rp');
+        });
+
+        input.addEventListener('blur', function() {
+            // Pastikan nilai tanpa format yang dikirim ke server
+            input.value = cleanRupiah(this.value);
+        });
+    });
+
+    // Form submit handler untuk memastikan format yang dikirim adalah angka murni
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function() {
+        rupiahInputs.forEach(input => {
+            input.value = cleanRupiah(input.value);
+        });
+    });
     </script>
 @endsection
