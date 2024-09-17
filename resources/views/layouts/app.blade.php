@@ -16,9 +16,9 @@
 <!DOCTYPE html>
 
 @if (\Request::is('rtl'))
-  <html dir="rtl" lang="ar">
+<html dir="rtl" lang="ar">
 @else
-  <html lang="en" >
+<html lang="en">
 @endif
 
 <head>
@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   @if (env('IS_DEMO'))
-      <x-demo-metas></x-demo-metas>
+  <x-demo-metas></x-demo-metas>
   @endif
 
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -48,21 +48,21 @@
 
 <body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
   @auth
-    @yield('auth')
+  @yield('auth')
   @endauth
   @guest
-    @yield('guest')
+  @yield('guest')
   @endguest
 
   @if(session()->has('success'))
-    <div x-data="{ show: true}"
-        x-init="setTimeout(() => show = false, 4000)"
-        x-show="show"
-        class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
-      <p class="m-0">{{ session('success')}}</p>
-    </div>
+  <div x-data="{ show: true}"
+    x-init="setTimeout(() => show = false, 4000)"
+    x-show="show"
+    class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
+    <p class="m-0">{{ session('success')}}</p>
+  </div>
   @endif
-    <!--   Core JS Files   -->
+  <!--   Core JS Files   -->
   <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
   <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
   <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
@@ -79,6 +79,95 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    //     // Function to format numbers to Rupiah
+    // function formatRupiah(angka) {
+    //     let numberString = angka.toString().replace(/[^,\d]/g, ''),
+    //         split = numberString.split(','),
+    //         sisa = split[0].length % 3,
+    //         rupiah = split[0].substr(0, sisa),
+    //         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    //     if (ribuan) {
+    //         let separator = sisa ? '.' : '';
+    //         rupiah += separator + ribuan.join('.');
+    //     }
+
+    //     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    //     return 'Rp ' + rupiah;
+    // }
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Ambil semua elemen yang berisi nilai debet, kredit, dan saldo
+    //     const debetElements = document.querySelectorAll('.debet-transaction');
+    //     const kreditElements = document.querySelectorAll('.kredit-transaction');
+    //     const saldoElements = document.querySelectorAll('.saldo');
+
+    //     // Format debet
+    //     debetElements.forEach(function(element) {
+    //         const value = element.innerText;
+    //         element.innerText = formatRupiah(value);
+    //     });
+
+    //     // Format kredit
+    //     kreditElements.forEach(function(element) {
+    //         const value = element.innerText;
+    //         element.innerText = formatRupiah(value);
+    //     });
+
+    //     // Format saldo
+    //     saldoElements.forEach(function(element) {
+    //         const value = element.innerText;
+    //         element.innerText = formatRupiah(value);
+    //     });
+    // });
+
+    // Function to format numbers to Rupiah
+    function formatRupiah(angka) {
+      let numberString = angka.toString().replace(/[^,\d]/g, ''),
+        split = numberString.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return 'Rp ' + rupiah;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Ambil semua elemen yang berisi nilai debet, kredit, dan saldo
+      const debetElements = document.querySelectorAll('.debet-transaction');
+      const kreditElements = document.querySelectorAll('.kredit-transaction');
+      const saldoElements = document.querySelectorAll('.saldo');
+
+      // Function to format the value if it's not empty
+      function formatIfNotEmpty(element) {
+        const value = element.innerText.trim();
+        if (value !== '' && !isNaN(value)) { // Check if the value is not empty and is a valid number
+          element.innerText = formatRupiah(value);
+        }
+      }
+
+      // Format debet
+      debetElements.forEach(function(element) {
+        formatIfNotEmpty(element);
+      });
+
+      // Format kredit
+      kreditElements.forEach(function(element) {
+        formatIfNotEmpty(element);
+      });
+
+      // Format saldo
+      saldoElements.forEach(function(element) {
+        formatIfNotEmpty(element);
+      });
+    });
   </script>
 
   <!-- Github buttons -->

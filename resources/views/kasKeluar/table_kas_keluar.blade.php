@@ -24,26 +24,28 @@
     </thead>
     <tbody>
         @foreach ($kasInduk as $kas)
-            <tr>
-                <td class="ps-4">
-                    <p class="text-xs font-weight-bold mb-0">
-                        {{ $kas->trans_date }}</p>
-                </td>
-                <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ $kas->keterangan }}
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p class="text-xs font-weight-bold mb-0">{{ $kas->status }}</p>
-                </td>
-                <td class="text-center">
-                    <p class="text-xs font-weight-bold mb-0">{{ $kas->periode }}</p>
-                </td>
-                <td class="text-center">
-                    <p class="text-xs font-weight-bold mb-0">
-                        {{ $kas->kredit_transaction }}</p>
-                </td>
-            </tr>
+        <tr>
+            <td class="ps-4">
+                <p class="text-xs font-weight-bold mb-0">
+                    {{ $kas->trans_date }}
+                </p>
+            </td>
+            <td>
+                <p class="text-xs font-weight-bold mb-0">{{ $kas->keterangan }}
+                </p>
+            </td>
+            <td class="text-center">
+                <p class="text-xs font-weight-bold mb-0">{{ $kas->status }}</p>
+            </td>
+            <td class="text-center">
+                <p class="text-xs font-weight-bold mb-0">{{ $kas->periode }}</p>
+            </td>
+            <td class="text-center">
+                <p class="text-xs font-weight-bold mb-0 kredit-transaction">
+                    {{ $kas->kredit_transaction }}
+                </p>
+            </td>
+        </tr>
         @endforeach
     </tbody>
 </table>
