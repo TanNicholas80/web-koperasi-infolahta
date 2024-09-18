@@ -1,18 +1,18 @@
 <table class="table align-items-center mb-0">
     <thead>
         <tr>
-            <th bgcolor="#FFEB00" style="border:1px solid black;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                Date
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Tanggal
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                Keterangan
+                Uraian
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Status
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Periode
             </th>
@@ -30,7 +30,7 @@
             'simpanan_pokok' => 'Simpanan Pokok',
             'sipanan_wajib' => 'Simpanan Wajib',
             'sipanan_khusus' => 'Simpanan Khusus',
-            'sipanan_tunai' => 'Simpanan Tunai',
+            'sipanan_tunai' => 'Penjualan Tunai',
             'jasa_sp' => 'Jasa SP',
             'provinsi' => 'Provinsi',
             'shu_puskop' => 'SHU Puskop',
@@ -39,7 +39,7 @@
             ];
             @endphp
             @foreach ($kasMasukOptions as $key => $label)
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 {{ $label }}
             </th>

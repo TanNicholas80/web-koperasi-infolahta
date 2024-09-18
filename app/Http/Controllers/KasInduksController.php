@@ -9,6 +9,7 @@ use App\Models\cash_out_trans;
 use App\Models\LogSaldo;
 use App\Models\main_cash_trans;
 use App\Models\main_cashs;
+use App\Models\Saldo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -48,18 +49,26 @@ class KasInduksController extends Controller
         // Ambil saldo terakhir dari database
         $lastCash = main_cashs::latest('created_at')->first();
         $lastSaldo = $lastCash ? $lastCash->saldo : 0;
+        $saldo_awal = Saldo::latest('created_at')->first();
 
         $mainCash = new main_cashs();
         $mainCash->date = $date->format('Y-m-d');
         // Cek apakah saldo_awal diinput oleh user
-        if ($request->has('saldo_awal') && $request->saldo_awal !== null) {
-            // Jika saldo_awal diinput oleh user, gunakan saldo_awal dari input user
-            $mainCash->saldo_awal = $request->saldo_awal;
-            $mainCash->saldo = $request->saldo_awal;  // Juga gunakan untuk saldo
+        // if ($request->has('saldo_awal') && $request->saldo_awal !== null) {
+        //     // Jika saldo_awal diinput oleh user, gunakan saldo_awal dari input user
+        //     $mainCash->saldo = $request->saldo_awal;  // Juga gunakan untuk saldo
+        // } else {
+        //     // Jika saldo_awal tidak diinput, gunakan saldo terakhir dari database
+        //     $mainCash->saldo = $lastSaldo;
+        // }
+
+        // Cek apakah ada saldo sebelumnya di database
+        if ($lastCash) {
+            // Jika ada saldo sebelumnya, gunakan saldo terakhir dan tambahkan nilai baru
+            $mainCash->saldo = $lastSaldo;  // Misalnya saldo baru ditambahkan
         } else {
-            // Jika saldo_awal tidak diinput, gunakan saldo terakhir dari database
-            $mainCash->saldo_awal = $lastSaldo;
-            $mainCash->saldo = $lastSaldo;
+            // Jika tidak ada saldo sebelumnya, gunakan saldo_awal yang diinput user
+            $mainCash->saldo = $saldo_awal->saldo_awal;
         }
         $mainCash->save();
 
@@ -461,14 +470,10 @@ class KasInduksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-    }
+    public function destroy(string $id) {}
 }

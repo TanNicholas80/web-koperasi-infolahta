@@ -34,6 +34,26 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
+        // Menambahkan border pada kolom A hingga E
+        $sheet->getStyle('A1:Z1000')->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ]);
+
+        // Menambahkan background color hanya untuk header (baris pertama)
+        $sheet->getStyle('A1:V1')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FFFF00'], // Background color kuning
+            ],
+            'font' => [
+                'bold' => true, // Membuat teks header menjadi tebal
+            ],
+        ]);
     }
 
     public function columnWidths(): array
@@ -87,8 +107,26 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
      */
     public function title(): string
     {
-        $monthName = Carbon::create()->month($this->month)->translatedFormat('F');
+        // Array singkatan bulan dalam bahasa Indonesia
+        $months = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MEI',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AGU',
+            9 => 'SEP',
+            10 => 'OKT',
+            11 => 'NOV',
+            12 => 'DES'
+        ];
 
-        return "{$monthName} - {$this->year}";
+        // Mengambil singkatan bulan berdasarkan month yang diterima
+        $monthName = $months[$this->month];
+
+        // Mengembalikan singkatan bulan beserta tahun
+        return "{$monthName}";
     }
 }

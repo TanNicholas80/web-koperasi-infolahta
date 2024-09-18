@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                Date
+                Tanggal
             </th>
             <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                Keterangan
+                Uraian
             </th>
             <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">

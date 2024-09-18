@@ -13,6 +13,7 @@ use App\Http\Controllers\KasMasukController;
 use App\Http\Controllers\KasMasuksController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
+use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -55,6 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/buku-keluar/download/excel', [BukuBesarKasKeluarController::class, 'exportBukuBesarKasKeluar'])->name('buku-keluar.export');
 
 	Route::resource('kasInduk', KasInduksController::class);
+
+	Route::post('/saldo/create', [SaldoController::class, 'create'])->name('saldo.create');
 
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);

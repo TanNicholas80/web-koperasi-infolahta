@@ -1,27 +1,26 @@
 <table class="table align-items-center mb-0">
     <thead>
         <tr>
-            <th bgcolor="#FFEB00" style="border:1px solid black;" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                Date
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Tanggal
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                Keterangan
+                Uraian
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Status
             </th>
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Periode
             </th>
             @php
             $kasKeluarOptions = [
-            'kas' => 'Kas',
             'bank_sp' => 'Bank SP',
             'bank_induk' => 'Bank Induk',
-            'simpan_pinjam' => 'Simpan Pinjam',
+            'simpan_pinjam' => 'Piutang Uang',
             'inventaris' => 'Inventaris',
             'penyertaan_puskop' => 'Penyertaan Puskop',
             'hutang_toko' => 'Hutang Toko',
@@ -33,7 +32,7 @@
             'simp_pokok' => 'Simpanan Pokok',
             'simp_wajib' => 'Simpanan Wajib',
             'simp_khusus' => 'Simpanan Khusus',
-            'shu_angg' => 'SHU Anggaran',
+            'shu_angg' => 'SHU Anggota',
             'pembelian_toko' => 'Pembelian Toko',
             'biaya_insentif' => 'Biaya Insentif',
             'biaya_atk' => 'Biaya ATK',
@@ -47,10 +46,11 @@
             'biaya_training' => 'Biaya Training',
             'inv_usipa' => 'INV Usipa',
             'lain_lain' => 'Lain-Lain',
+            'kas' => 'Kas',
             ];
             @endphp
             @foreach ($kasKeluarOptions as $key => $label)
-            <th bgcolor="#FFEB00" style="border:1px solid black;"
+            <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 {{ $label }}
             </th>

@@ -8,8 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class KasKeluarPerMonthSheet implements FromView, WithTitle
+class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, WithStyles
 {
     protected $year;
     protected $month;
@@ -18,6 +21,50 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle
     {
         $this->year = $year;
         $this->month = $month;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        // Mengatur wrap text pada kolom tertentu
+        $sheet->getStyle('A2:Z1000')->getAlignment()->setWrapText(true);
+
+        // Mengatur tinggi baris secara otomatis sesuai isi
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+        $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+        $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        // Menambahkan border pada kolom A hingga E
+        $sheet->getStyle('A1:E1000')->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ]);
+
+        // Menambahkan background color hanya untuk header (baris pertama)
+        $sheet->getStyle('A1:E1')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FFFF00'], // Background color kuning
+            ],
+            'font' => [
+                'bold' => true, // Membuat teks header menjadi tebal
+            ],
+        ]);
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 15,  // Date
+            'B' => 25,  // Keterangan
+            'C' => 15,  // Status
+            'D' => 15,  // Periode
+            'E' => 20,  // Kas
+        ];
     }
 
     public function view(): View
@@ -44,9 +91,32 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle
      * Define the sheet title
      */
     public function title(): string
-    {
-        $monthName = Carbon::create()->month($this->month)->translatedFormat('F');
+    // {
+    //     $monthName = Carbon::create()->month($this->month)->translatedFormat('F');
 
-        return "{$monthName} - {$this->year}";
+    //     return "{$monthName} - {$this->year}";
+    // }
+    {
+        // Array singkatan bulan dalam bahasa Indonesia
+        $months = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MEI',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AGU',
+            9 => 'SEP',
+            10 => 'OKT',
+            11 => 'NOV',
+            12 => 'DES'
+        ];
+
+        // Mengambil singkatan bulan berdasarkan month yang diterima
+        $monthName = $months[$this->month];
+
+        // Mengembalikan singkatan bulan beserta tahun
+        return "{$monthName}";
     }
 }
