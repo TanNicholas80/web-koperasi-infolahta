@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->float('saldo');
-            $table->float('saldo_awal')->nullable();
+            $table->float('saldo_before_trans')->nullable();
             $table->timestamps();
         });
     }

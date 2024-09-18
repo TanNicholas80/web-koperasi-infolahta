@@ -13,10 +13,6 @@
                         </div>
                         <div>
                             <div class="d-flex">
-                                <!-- <form action="{{ route('kas-keluar.export') }}" method="POST" class="d-flex align-items-center">
-                                    <input type="text" name="saldo_awal" placeholder="Masukan Saldo Awal" required class="form-control me-2">
-                                    <button type="submit" class="btn bg-gradient-primary btn-sm mb-0">Saldo</button>
-                                </form> -->
                                 <form action="{{ route('saldo.create') }}" method="POST" class="d-flex align-items-center">
                                     @csrf <!-- Pastikan token CSRF ada untuk keamanan -->
                                     <input type="text" name="saldo_awal" placeholder="Masukan Saldo Awal" required class="form-control me-2">

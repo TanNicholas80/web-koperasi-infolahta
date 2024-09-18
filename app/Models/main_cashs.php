@@ -12,6 +12,7 @@ class main_cashs extends Model
     protected $fillable = [
         'date',
         'saldo',
+        'saldo_before_trans'
     ];
 
     public function transactions()
