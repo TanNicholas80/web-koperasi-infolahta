@@ -2,6 +2,9 @@
     <thead>
         <tr>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                No
+            </th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Tanggal
             </th>
             <th
@@ -25,6 +28,11 @@
     <tbody>
         @foreach ($kasInduk as $kas)
         <tr>
+            <td class="ps-4">
+                <p class="text-xs font-weight-bold mb-0">
+                    {{ $loop->iteration }}
+                </p>
+            </td>
             <td class="ps-4">
                 <p class="text-xs font-weight-bold mb-0">
                     {{ $kas->trans_date }}

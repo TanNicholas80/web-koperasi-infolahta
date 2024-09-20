@@ -45,7 +45,7 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, W
         ]);
 
         // Menambahkan background color hanya untuk header (baris pertama)
-        $sheet->getStyle('A1:E1')->applyFromArray([
+        $sheet->getStyle('A1:F1')->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FFFF00'], // Background color kuning
@@ -60,10 +60,11 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, W
     {
         return [
             'A' => 15,  // Date
-            'B' => 25,  // Keterangan
-            'C' => 15,  // Status
-            'D' => 15,  // Periode
-            'E' => 20,  // Kas
+            'B' => 15,  // Date
+            'C' => 25,  // Keterangan
+            'D' => 15,  // Status
+            'E' => 15,  // Periode
+            'F' => 20,  // Kas
         ];
     }
 

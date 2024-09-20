@@ -45,7 +45,7 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
         ]);
 
         // Menambahkan background color hanya untuk header (baris pertama)
-        $sheet->getStyle('A1:V1')->applyFromArray([
+        $sheet->getStyle('A1:AH1')->applyFromArray([
             'fill' => [
                 'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                 'startColor' => ['argb' => 'FFFF00'], // Background color kuning
@@ -60,27 +60,27 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
     {
         return [
             'A' => 15,  // Date
-            'B' => 25,  // Keterangan
-            'C' => 15,  // Status
-            'D' => 15,  // Periode
-            'E' => 20,  // Kas
-            'F' => 20,  // Bank SP
-            'G' => 20,  // Bank Induk
-            'H' => 20,  // Piutang Uang
-            'I' => 20,  // Piutang Barang Toko
-            'J' => 20,  // Dana Sosial
-            'K' => 25,  // Dana Pendidikan (Dik)
-            'L' => 25,  // Dana Pengembangan (PDK)
-            'M' => 25,  // Resiko Kredit
-            'N' => 25,  // Simpanan Pokok
-            'O' => 25,  // Simpanan Wajib
-            'P' => 25,  // Simpanan Khusus
-            'Q' => 25,  // Simpanan Tunai
-            'R' => 20,  // Jasa SP
-            'S' => 20,  // Provinsi
-            'T' => 20,  // SHU Puskop
-            'U' => 20,  // Investasi USIPA
-            'V' => 20,  // Lain-Lain
+            'B' => 15,  // Date
+            'C' => 25,  // Keterangan
+            'D' => 15,  // Status
+            'E' => 15,  // Periode
+            'F' => 20,  // Kas
+            'G' => 20,  // Bank SP
+            'H' => 20,  // Bank Induk
+            'I' => 20,  // Piutang Uang
+            'J' => 20,  // Piutang Barang Toko
+            'K' => 20,  // Dana Sosial
+            'L' => 25,  // Dana Pendidikan (Dik)
+            'M' => 25,  // Dana Pengembangan (PDK)
+            'N' => 25,  // Resiko Kredit
+            'O' => 25,  // Simpanan Pokok
+            'P' => 25,  // Simpanan Wajib
+            'Q' => 25,  // Simpanan Khusus
+            'R' => 25,  // Simpanan Tunai
+            'S' => 20,  // Jasa SP
+            'T' => 20,  // Provinsi
+            'U' => 20,  // SHU Puskop
+            'V' => 20,  // Investasi USIPA
             'W' => 20,  // Lain-Lain
             'X' => 20,  // Lain-Lain
             'Y' => 20,  // Lain-Lain
@@ -92,6 +92,7 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
             'AE' => 20,  // Lain-Lain
             'AF' => 20,  // Lain-Lain
             'AG' => 20,  // Lain-Lain
+            'AH' => 20,  // Lain-Lain
         ];
     }
 
