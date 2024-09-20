@@ -555,6 +555,7 @@ class KasInduksController extends Controller
                 ]);
 
                 // Update Setiap Saldo dan saldo before trans
+                $currentSaldo = $mainCash->saldo;
                 foreach ($mainCashAfter as $cashAfter) {
                     // Inisialisasi variabel untuk menyimpan total debet transaksi
                     $totalDebetTransactionAfter = 0;
@@ -568,9 +569,12 @@ class KasInduksController extends Controller
 
                     // Update saldo pada cashAfter dengan menambahkan total debet transaksi
                     $cashAfter->update([
-                        'saldo' => $mainCash->saldo + $totalDebetTransactionAfter - $totalKreditTransactionAfter, // Tambahkan semua debet transaksi
-                        'saldo_before_trans' => $mainCash->saldo,
+                        'saldo' => $currentSaldo + $totalDebetTransactionAfter - $totalKreditTransactionAfter, // Tambahkan semua debet transaksi
+                        'saldo_before_trans' => $currentSaldo,
                     ]);
+
+                    // Set currentSaldo menjadi saldo yang baru diperbarui
+                    $currentSaldo = $cashAfter->saldo;
                 }
                 // membuat kondisi cek apakah ID sudah maincashtrans sudah tercantum pada table Cash in trans
                 $existsInCashIn = cash_in_trans::where('id_main_cash', $transaction->id)->exists();
@@ -850,6 +854,7 @@ class KasInduksController extends Controller
                     'saldo' => $mainCash->saldo_before_trans - $totalKreditTransactionNow,
                 ]);
 
+                $currentSaldo = $mainCash->saldo;
                 foreach ($mainCashAfter as $cashAfter) {
                     // Inisialisasi variabel untuk menyimpan total debet transaksi
                     $totalKreditTransactionAfter = 0;
@@ -863,9 +868,12 @@ class KasInduksController extends Controller
 
                     // Update saldo pada cashAfter dengan menambahkan total debet transaksi
                     $cashAfter->update([
-                        'saldo' => $mainCash->saldo - $totalKreditTransactionAfter + $totalDebetTransactionAfter, // Tambahkan semua debet transaksi
-                        'saldo_before_trans' => $mainCash->saldo,
+                        'saldo' => $currentSaldo - $totalKreditTransactionAfter + $totalDebetTransactionAfter, // Tambahkan semua debet transaksi
+                        'saldo_before_trans' => $currentSaldo,
                     ]);
+
+                    // Set currentSaldo menjadi saldo yang baru diperbarui
+                    $currentSaldo = $cashAfter->saldo;
                 }
 
                 // membuat kondisi cek apakah ID maincashtrans sudah tercantum pada table Cash out trans
@@ -1290,5 +1298,65 @@ class KasInduksController extends Controller
      */
     public function destroy(string $id)
     {
+        $mainCash = main_cashs::with('transactions')->findOrFail($id);
+        $mainCashAfter = main_cashs::where('id', '>', $id)->with('transactions')->get();
+
+        $currentSaldo = $mainCash->saldo_before_trans;
+        foreach ($mainCashAfter as $cashAfter) {
+            // Inisialisasi variabel untuk menyimpan total debet transaksi
+            $totalKreditTransactionAfter = 0;
+            $totalDebetTransactionAfter = 0;
+
+            // Loop untuk menjumlahkan semua debet transaction pada cashAfter
+            foreach ($cashAfter->transactions as $transAfter) {
+                $totalKreditTransactionAfter += $transAfter->kredit_transaction;
+                $totalDebetTransactionAfter += $transAfter->debet_transaction;
+            }
+
+            // Update saldo pada cashAfter dengan menambahkan total debet transaksi
+            $cashAfter->update([
+                'saldo' => $currentSaldo - $totalKreditTransactionAfter + $totalDebetTransactionAfter, // Tambahkan semua debet transaksi
+                'saldo_before_trans' => $currentSaldo,
+            ]);
+
+            $currentSaldo = $cashAfter->saldo;
+        }
+
+        // Periksa apakah mainCash memiliki transaksi
+        if ($mainCash->transactions->isNotEmpty()) {
+            // Loop melalui semua transaksi dari mainCash
+            foreach ($mainCash->transactions as $transaction) {
+                $cashInTrans = cash_in_trans::where('id_main_cash', $transaction->id)->first();
+                if ($cashInTrans) {
+                    $cashInTrans->delete();
+                }
+
+                // Hapus record dari tabel cash_out_trans
+                $cashOutTrans = cash_out_trans::where('id_main_cash', $transaction->id)->first();
+                if ($cashOutTrans) {
+                    $cashOutTrans->delete();
+                }
+
+                // Hapus record dari tabel buku_besar_cash_ins
+                $bukuBesarCashIn = buku_besar_cash_ins::where('id_main_cash_trans', $transaction->id)->first();
+                if ($bukuBesarCashIn) {
+                    $bukuBesarCashIn->delete();
+                }
+
+                // Hapus record dari tabel buku_besar_cash_outs
+                $bukuBesarCashOut = buku_besar_cash_outs::where('id_main_cash_trans', $transaction->id)->first();
+                if ($bukuBesarCashOut) {
+                    $bukuBesarCashOut->delete();
+                }
+
+                // Hapus transaksi terkait
+                $transaction->delete();
+            }
+        }
+
+        // Setelah semua relasi dihapus, hapus data kas masuk
+        $mainCash->delete();
+
+        return redirect()->route('kasInduk.index')->with('success', 'Kas Induk berhasil dihapus.');
     }
 }

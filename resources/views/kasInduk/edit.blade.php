@@ -142,37 +142,76 @@
                 const kasKeluarFields = parentFieldset.querySelector('.kas-keluar-fields');
                 const debetInput = parentFieldset.querySelector('input[name$="[debet_transaction]"]');
                 const kreditInput = parentFieldset.querySelector('input[name$="[kredit_transaction]"]');
-                const kategoriBukuBesarSelect = parentFieldset.querySelector(
-                    'select[name$="[kategori_buku_besar]"]');
+                const kasMasukSelect = kasMasukFields.querySelector('select[name$="[kategori_buku_besar]"]');
+                const kasKeluarSelect = kasKeluarFields.querySelector('select[name$="[kategori_buku_besar]"]');
 
                 if (status === 'KM') {
+                    // Menampilkan field kas masuk dan menyembunyikan kas keluar
                     kasMasukFields.style.display = 'block';
                     kasKeluarFields.style.display = 'none';
-                    debetInput.disabled = false; // Aktifkan debet untuk Kas Masuk
-                    kreditInput.disabled = true; // Nonaktifkan kredit untuk Kas Masuk
+
+                    // Mengaktifkan input debet dan menonaktifkan input kredit
+                    debetInput.disabled = false;
+                    kreditInput.disabled = true;
                     kreditInput.value = ''; // Reset nilai kredit
-                    kategoriBukuBesarSelect.disabled = false; // Aktifkan buku besar untuk Kas Masuk
+
+                    // Mengaktifkan select kategori buku besar untuk kas masuk dan menonaktifkan yang lain
+                    kasMasukSelect.disabled = false;
+                    kasKeluarSelect.disabled = true;
+                    kasKeluarSelect.removeAttribute('name'); // Hapus atribut name agar tidak terkirim
+                    kasMasukSelect.setAttribute('name',
+                        `transactions[${parentFieldset.dataset.index}][kategori_buku_besar]`
+                        ); // Set kembali name yang benar
+
+                    debetInput.required = true; // Set debet input required
+                    kreditInput.required = false; // Set kredit input not required
                 } else if (status === 'KK') {
+                    // Menampilkan field kas keluar dan menyembunyikan kas masuk
                     kasMasukFields.style.display = 'none';
                     kasKeluarFields.style.display = 'block';
-                    debetInput.disabled = true; // Nonaktifkan debet untuk Kas Keluar
-                    kreditInput.disabled = false; // Aktifkan kredit untuk Kas Keluar
+
+                    // Mengaktifkan input kredit dan menonaktifkan input debet
+                    debetInput.disabled = true;
+                    kreditInput.disabled = false;
                     debetInput.value = ''; // Reset nilai debet
-                    kategoriBukuBesarSelect.disabled = false; // Aktifkan buku besar untuk Kas Keluar
+
+                    // Mengaktifkan select kategori buku besar untuk kas keluar dan menonaktifkan yang lain
+                    kasMasukSelect.disabled = true;
+                    kasKeluarSelect.disabled = false;
+                    kasMasukSelect.removeAttribute('name'); // Hapus atribut name agar tidak terkirim
+                    kasKeluarSelect.setAttribute('name',
+                        `transactions[${parentFieldset.dataset.index}][kategori_buku_besar]`
+                        ); // Set kembali name yang benar
+
+                    debetInput.required = false; // Set debet input not required
+                    kreditInput.required = true; // Set kredit input required
                 } else {
+                    // Menyembunyikan kedua field dan menonaktifkan input
                     kasMasukFields.style.display = 'none';
                     kasKeluarFields.style.display = 'none';
-                    debetInput.disabled = true; // Nonaktifkan debet
-                    kreditInput.disabled = true; // Nonaktifkan kredit
-                    kategoriBukuBesarSelect.disabled = true; // Nonaktifkan buku besar
-                    debetInput.value = ''; // Reset nilai debet
-                    kreditInput.value = ''; // Reset nilai kredit
+                    debetInput.disabled = true;
+                    kreditInput.disabled = true;
+                    kasMasukSelect.disabled = true;
+                    kasKeluarSelect.disabled = true;
+                    debetInput.value = '';
+                    kreditInput.value = '';
+
+                    // Hapus atribut name agar tidak terkirim
+                    kasMasukSelect.removeAttribute('name');
+                    kasKeluarSelect.removeAttribute('name');
+
+                    debetInput.required = false; // Set debet input not required
+                    kreditInput.required = false; // Set kredit input not required
                 }
             }
 
             // Inisialisasi awal untuk menampilkan field sesuai status yang ada di form
             const statusFields = document.querySelectorAll('select[name$="[status]"]');
-            statusFields.forEach(statusField => {
+            statusFields.forEach((statusField, index) => {
+                // Set data index untuk fieldset
+                const parentFieldset = statusField.closest('fieldset');
+                parentFieldset.dataset.index = index;
+
                 toggleFieldsByStatus(statusField); // Panggil fungsi untuk setiap status field
 
                 // Tambahkan event listener untuk perubahan status
