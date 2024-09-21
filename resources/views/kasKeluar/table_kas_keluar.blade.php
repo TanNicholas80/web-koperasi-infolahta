@@ -55,5 +55,11 @@
             </td>
         </tr>
         @endforeach
+        <tr>
+            <td colspan="5" class="text-center text-sm font-weight-bold">Total</td>
+            <td class="text-center text-xs font-weight-bold kredit-transaction">
+                {{ $totalKredit }}
+            </td>
+        </tr>
     </tbody>
 </table>

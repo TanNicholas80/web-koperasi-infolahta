@@ -6,6 +6,7 @@ use App\Models\cash_out_trans;
 use App\Models\main_cash_trans;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
@@ -33,16 +34,6 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, W
 
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        // Menambahkan border pada kolom A hingga E
-        $sheet->getStyle('A1:E1000')->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ]);
 
         // Menambahkan background color hanya untuk header (baris pertama)
         $sheet->getStyle('A1:F1')->applyFromArray([
@@ -76,6 +67,11 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, W
         // Extract IDs from the collection
         $ids = $kasKeluar->pluck('id_main_cash');
 
+        $totalKredit = main_cash_trans::whereYear('trans_date', $this->year)
+            ->whereMonth('trans_date', $this->month)
+            ->whereIn('id', $ids)
+            ->sum('kredit_transaction');
+
         // Use the IDs to filter main_cash_trans
         $kasInduk = main_cash_trans::whereYear('trans_date', $this->year)
             ->whereMonth('trans_date', $this->month)
@@ -84,7 +80,8 @@ class KasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidths, W
             ->get();
 
         return view('kasKeluar.table_kas_keluar', [
-            'kasInduk' => $kasInduk
+            'kasInduk' => $kasInduk,
+            'totalKredit' => $totalKredit
         ]);
     }
 

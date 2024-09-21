@@ -34,16 +34,6 @@ class KasMasukPerMothSheet implements FromView, WithTitle, WithColumnWidths, Wit
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A2:Z1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        // Menambahkan border pada kolom A hingga E
-        $sheet->getStyle('A1:E1000')->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ]);
-
         // Menambahkan background color hanya untuk header (baris pertama)
         $sheet->getStyle('A1:F1')->applyFromArray([
             'fill' => [
@@ -76,6 +66,11 @@ class KasMasukPerMothSheet implements FromView, WithTitle, WithColumnWidths, Wit
         // Extract IDs from the collection
         $ids = $kasMasuk->pluck('id_main_cash');
 
+        $totalDebet = main_cash_trans::whereYear('trans_date', $this->year)
+            ->whereMonth('trans_date', $this->month)
+            ->whereIn('id', $ids)
+            ->sum('debet_transaction');
+
         // Use the IDs to filter main_cash_trans
         $kasInduk = main_cash_trans::whereYear('trans_date', $this->year)
             ->whereMonth('trans_date', $this->month)
@@ -84,7 +79,8 @@ class KasMasukPerMothSheet implements FromView, WithTitle, WithColumnWidths, Wit
             ->get();
 
         return view('kasMasuk.table_kas_masuk', [
-            'kasInduk' => $kasInduk
+            'kasInduk' => $kasInduk,
+            'totalDebet' => $totalDebet
         ]);
     }
 

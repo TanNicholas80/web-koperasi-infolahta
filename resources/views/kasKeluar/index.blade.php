@@ -19,7 +19,30 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            @include('kasKeluar.table_kas_keluar')
+                            @include('kasKeluar.table_kas_keluar', [$kasInduk, $totalKredit])
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <form action="{{ route('kas-keluar') }}" method="GET" class="d-flex align-items-center">
+                                @php
+                                    $currentYear = \Carbon\Carbon::now()->year;
+                                    $currentMonth = \Carbon\Carbon::now()->month;
+                                @endphp
+                                <select name="month" class="form-select me-2" style="width: 150px;">
+                                    @foreach(range(1, 12) as $month)
+                                        <option value="{{ $month }}" {{ request('month', $currentMonth) == $month ? 'selected' : '' }}>
+                                            {{ \Carbon\Carbon::create()->month($month)->translatedFormat('F') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <select name="year" class="form-select me-2" style="width: 150px;">
+                                    @foreach(range($currentYear - 5, $currentYear) as $year)
+                                        <option value="{{ $year }}" {{ request('year', $currentYear) == $year ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn bg-gradient-primary btn-sm mb-0">Filter</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use App\Exports\ExportKasMasuk;
 use App\Models\cash_in_trans;
 use App\Models\main_cash_trans;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KasMasuksController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
+        $year = $req->input('year', Carbon::now()->year);
+        $month = $req->input('month', Carbon::now()->month);
         // Retrieve all records
         $kasMasuk = cash_in_trans::all();
 
         // Extract IDs from the collection
         $ids = $kasMasuk->pluck('id_main_cash'); // Get all id_main_cash values
 
-        // Use the IDs to filter main_cash_trans
-        $kasInduk = main_cash_trans::whereIn('id', $ids)->get();
+        $totalDebet = main_cash_trans::whereYear('trans_date', $year)
+            ->whereMonth('trans_date', $month)
+            ->whereIn('id', $ids)
+            ->sum('debet_transaction');
 
-        return view('kasMasuk.index', compact('kasInduk'));
+        // Use the IDs to filter main_cash_trans
+        $kasInduk = main_cash_trans::whereYear('trans_date', $year)
+            ->whereMonth('trans_date', $month)
+            ->whereIn('id', $ids)
+            ->orderBy('trans_date', 'asc')
+            ->get();
+
+        return view('kasMasuk.index', compact('kasInduk', 'totalDebet', 'year', 'month'));
     }
 
     public function exportKasMasuk(Request $req)
