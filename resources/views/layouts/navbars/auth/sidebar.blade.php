@@ -31,7 +31,7 @@
         </a>
       </li>
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas</h6>
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas Induk</h6>
       </li>
       <li class="nav-item pb-2">
         <a class="nav-link {{ Request::is('kasInduk*') ? 'active' : '' }}" href="{{ route('kasInduk.index') }}">
@@ -71,6 +71,49 @@
             <i style="font-size: 1rem;" class="fas fa-file-invoice-dollar ps-2 pe-2 text-center text-dark {{ (Request::is('buku-keluar') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
           <span class="nav-link-text ms-1">Buku Besar Kas Keluar</span>
+        </a>
+      </li>
+      <li class="nav-item mt-2">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas Usipa</h6>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ Request::is('kasUsipa*') ? 'active' : '' }}" href="{{ route('kasUsipa.index') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i style="font-size: 1rem;" class="fas fa-file-alt ps-2 pe-2 text-center {{ Request::is('kasUsipa*') ? 'text-white' : 'text-dark' }}" aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Kas Usipa</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('kas-masuk-usipa') ? 'active' : '') }}" href="{{ route('kas-masuk-usipa') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i style="font-size: 1rem;" class="fas fa-money-check-alt  ps-2 pe-2 text-center text-dark {{ (Request::is('kas-masuk-usipa') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Kas Masuk Usipa</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('kas-keluar-usipa') ? 'active' : '') }}" href="{{ route('kas-keluar-usipa') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i style="font-size: 1rem;" class="fas fa-hand-holding-usd  ps-2 pe-2 text-center text-dark {{ (Request::is('kas-keluar-usipa') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Kas Keluar Usipa</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('buku-masuk-usipa') ? 'active' : '') }}" href="{{ route('buku-masuk-usipa') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i style="font-size: 1rem;" class="fas fa-file-invoice-dollar ps-2 pe-2 text-center text-dark {{ (Request::is('buku-masuk-usipa') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Buku Besar Usipa Masuk</span>
+        </a>
+      </li>
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('buku-keluar-usipa') ? 'active' : '') }}" href="{{ route('buku-keluar-usipa') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i style="font-size: 1rem;" class="fas fa-file-invoice-dollar ps-2 pe-2 text-center text-dark {{ (Request::is('buku-keluar-usipa') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Buku Besar Usipa Keluar</span>
         </a>
       </li>
       <li class="nav-item mt-2">

@@ -881,7 +881,7 @@ class KasInduksController extends Controller
                 if (!$existsInCashOut) {
                     // Insert ke cash_out_trans jika belum ada
                     cash_out_trans::create([
-                        'id_main_cash' => $mainCash->id,
+                        'id_main_cash' => $transaction->id,
                     ]);
                 }
                 // membuat kondisi cek apakah id maincashtrans sudah tercantum pada table buku_besar_cash_outs
@@ -1279,10 +1279,10 @@ class KasInduksController extends Controller
                                 $shouldSave = false;
                                 break;
                         }
-                    }
 
-                    if ($shouldSave) {
-                        $bukuBesarCashOut->save();
+                        if ($shouldSave) {
+                            $bukuBesarCashOut->save();
+                        }
                     }
                 }
             } else {

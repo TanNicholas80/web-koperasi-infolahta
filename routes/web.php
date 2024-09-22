@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\BukuBesarKasKeluarController;
+use App\Http\Controllers\BukuBesarKasKeluarUsipaController;
 use App\Http\Controllers\BukuBesarKasMasukController;
+use App\Http\Controllers\BukuBesarKasMasukUsipaController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -9,8 +11,11 @@ use App\Http\Controllers\KasIndukController;
 use App\Http\Controllers\KasInduksController;
 use App\Http\Controllers\KasKeluarController;
 use App\Http\Controllers\KasKeluarsController;
+use App\Http\Controllers\KasKeluarUsipaController;
 use App\Http\Controllers\KasMasukController;
 use App\Http\Controllers\KasMasuksController;
+use App\Http\Controllers\KasMasukUsipaController;
+use App\Http\Controllers\KasUsipaController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SaldoController;
@@ -46,16 +51,26 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/kas-masuk', [KasMasuksController::class, 'index'])->name('kas-masuk');
 	Route::get('/kas-keluar', [KasKeluarsController::class, 'index'])->name('kas-keluar');
 
+	Route::get('/kas-masuk-usipa', [KasMasukUsipaController::class, 'index'])->name('kas-masuk-usipa');
+	Route::get('/kas-keluar-usipa', [KasKeluarUsipaController::class, 'index'])->name('kas-keluar-usipa');
+
 	Route::get('/kas-masuk/download/excel', [KasMasuksController::class, 'exportKasMasuk'])->name('kas-masuk.export');
 	Route::get('/kas-keluar/download/excel', [KasKeluarsController::class, 'exportKasKeluar'])->name('kas-keluar.export');
 
 	Route::get('/buku-masuk', [BukuBesarKasMasukController::class, 'index'])->name('buku-masuk');
 	Route::get('/buku-keluar', [BukuBesarKasKeluarController::class, 'index'])->name('buku-keluar');
 
+	Route::get('/buku-masuk-usipa', [BukuBesarKasMasukUsipaController::class, 'index'])->name('buku-masuk-usipa');
+	Route::get('/buku-keluar-usipa', [BukuBesarKasKeluarUsipaController::class, 'index'])->name('buku-keluar-usipa');
+
 	Route::get('/buku-masuk/download/excel', [BukuBesarKasMasukController::class, 'exportBukuBesarKasMasuk'])->name('buku-masuk.export');
 	Route::get('/buku-keluar/download/excel', [BukuBesarKasKeluarController::class, 'exportBukuBesarKasKeluar'])->name('buku-keluar.export');
 
+	Route::get('/buku-masuk-usipa/download/excel', [BukuBesarKasMasukUsipaController::class, 'exportBukuBesarKasMasukUsipa'])->name('buku-masuk-usipa.export');
+	Route::get('/buku-keluar-usipa/download/excel', [BukuBesarKasKeluarUsipaController::class, 'exportBukuBesarKasKeluarUsipa'])->name('buku-keluar-usipa.export');
+
 	Route::resource('kasInduk', KasInduksController::class);
+	Route::resource('kasUsipa', KasUsipaController::class);
 
 	Route::post('/saldo/create', [SaldoController::class, 'create'])->name('saldo.create');
 

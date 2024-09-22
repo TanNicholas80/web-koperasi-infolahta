@@ -14,11 +14,6 @@
             <input type="date" id="date" name="date" class="form-control" required>
         </div>
 
-        <!-- <div class="form-group mb-3">
-                <label for="saldo_awal">Saldo Awal</label>
-                <input type="text" id="saldo_awal" name="saldo_awal" class="form-control">
-            </div> -->
-
         <!-- Input untuk transaksi -->
         <div id="transactions-container">
             <h3>Transaksi</h3>
