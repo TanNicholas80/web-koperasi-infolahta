@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Sep 2024 pada 16.35
+-- Waktu pembuatan: 22 Sep 2024 pada 19.42
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -57,11 +57,7 @@ CREATE TABLE `buku_besar_cash_ins` (
 --
 
 INSERT INTO `buku_besar_cash_ins` (`id`, `id_main_cash_trans`, `kas`, `bank_sp`, `bank_induk`, `piutang_uang`, `piutang_barang_toko`, `dana_sosial`, `dana_dik`, `dana_pdk`, `resiko_kredit`, `simpanan_pokok`, `sipanan_wajib`, `sipanan_khusus`, `sipanan_tunai`, `jasa_sp`, `provinsi`, `shu_puskop`, `inv_usipa`, `lain_lain`, `created_at`, `updated_at`) VALUES
-(1, 1, 200000, 200000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 09:31:37', '2024-09-13 09:31:37'),
-(2, 2, 200000, 200000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(3, 4, 200000, 200000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 10:29:54', '2024-09-13 10:29:54'),
-(4, 6, 500000, 500000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 10:57:52', '2024-09-13 10:57:52'),
-(5, 7, 300000, 300000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-14 14:31:04', '2024-09-14 14:31:04');
+(5, 5, 500000, 0, 0, 0, 0, 500000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-20 05:21:41', '2024-09-20 05:21:41');
 
 -- --------------------------------------------------------
 
@@ -110,10 +106,87 @@ CREATE TABLE `buku_besar_cash_outs` (
 --
 
 INSERT INTO `buku_besar_cash_outs` (`id`, `id_main_cash_trans`, `kas`, `bank_sp`, `bank_induk`, `simpan_pinjam`, `inventaris`, `penyertaan_puskop`, `hutang_toko`, `dana_pengurus`, `dana_karyawan`, `dana_sosial`, `dana_dik`, `dana_pdk`, `simp_pokok`, `simp_wajib`, `simp_khusus`, `shu_angg`, `pembelian_toko`, `biaya_insentif`, `biaya_atk`, `biaya_transport`, `biaya_pembinaan`, `biaya_pembungkus`, `biaya_rat`, `biaya_thr`, `biaya_pajak`, `biaya_admin`, `biaya_training`, `inv_usipa`, `lain_lain`, `created_at`, `updated_at`) VALUES
-(1, 3, 100000, 0, 0, 0, 0, 0, 100000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(2, 5, 100000, 0, 0, 0, 0, 0, 100000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-13 10:31:25', '2024-09-13 10:31:25'),
-(3, 8, 200000, 0, 0, 0, 0, 0, 200000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-15 02:24:26', '2024-09-15 02:24:26'),
-(4, 9, 300000, 0, 0, 0, 0, 0, 300000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-15 02:24:26', '2024-09-15 02:24:26');
+(2, 4, 400000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-20 05:15:58', '2024-09-20 05:16:38'),
+(3, 6, 100000, 0, 0, 0, 0, 0, 100000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2024-09-20 05:21:41', '2024-09-20 05:21:41');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `buku_besar_usipa_cash_ins`
+--
+
+CREATE TABLE `buku_besar_usipa_cash_ins` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_kas_usipa_trans` int(11) NOT NULL,
+  `kas` double NOT NULL DEFAULT 0,
+  `bank_sp` double NOT NULL DEFAULT 0,
+  `bank_induk` double NOT NULL DEFAULT 0,
+  `piutang_uang` double NOT NULL DEFAULT 0,
+  `piutang_brg_toko` double NOT NULL DEFAULT 0,
+  `dana_sosial` double NOT NULL DEFAULT 0,
+  `dana_dik` double NOT NULL DEFAULT 0,
+  `dana_pdk` double NOT NULL DEFAULT 0,
+  `resiko_kredit` double NOT NULL DEFAULT 0,
+  `simp_pokok` double NOT NULL DEFAULT 0,
+  `simp_wajib` double NOT NULL DEFAULT 0,
+  `simp_khusus` double NOT NULL DEFAULT 0,
+  `penjualan_tunai` double NOT NULL DEFAULT 0,
+  `jasa_sp` double NOT NULL DEFAULT 0,
+  `provisi` double NOT NULL DEFAULT 0,
+  `shu_puskop` double NOT NULL DEFAULT 0,
+  `modal_disetor` double NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `buku_besar_usipa_cash_ins`
+--
+
+INSERT INTO `buku_besar_usipa_cash_ins` (`id`, `id_kas_usipa_trans`, `kas`, `bank_sp`, `bank_induk`, `piutang_uang`, `piutang_brg_toko`, `dana_sosial`, `dana_dik`, `dana_pdk`, `resiko_kredit`, `simp_pokok`, `simp_wajib`, `simp_khusus`, `penjualan_tunai`, `jasa_sp`, `provisi`, `shu_puskop`, `modal_disetor`, `created_at`, `updated_at`) VALUES
+(2, 2, 300000, 0, 0, 0, 0, 0, 0, 0, 0, 300000, 0, 0, 0, 0, 0, 0, 0, '2024-09-22 14:18:17', '2024-09-22 14:19:30');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `buku_besar_usipa_cash_outs`
+--
+
+CREATE TABLE `buku_besar_usipa_cash_outs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_kas_usipa_trans` int(11) NOT NULL,
+  `bank_sp` double NOT NULL DEFAULT 0,
+  `bank_induk` double NOT NULL DEFAULT 0,
+  `simpanan_pinjaman` double NOT NULL DEFAULT 0,
+  `inventaris` double NOT NULL DEFAULT 0,
+  `penyertaan_puskop` double NOT NULL DEFAULT 0,
+  `hutang_toko` double NOT NULL DEFAULT 0,
+  `dana_pengurus` double NOT NULL DEFAULT 0,
+  `dana_karyawan` double NOT NULL DEFAULT 0,
+  `dana_sosial` double NOT NULL DEFAULT 0,
+  `dana_dik` double NOT NULL DEFAULT 0,
+  `dana_pdk` double NOT NULL DEFAULT 0,
+  `simp_pokok` double NOT NULL DEFAULT 0,
+  `simp_wajib` double NOT NULL DEFAULT 0,
+  `simp_khusus` double NOT NULL DEFAULT 0,
+  `shu_angg` double NOT NULL DEFAULT 0,
+  `pembelian_toko` double NOT NULL DEFAULT 0,
+  `biaya_insentif` double NOT NULL DEFAULT 0,
+  `biaya_atk` double NOT NULL DEFAULT 0,
+  `biaya_transport` double NOT NULL DEFAULT 0,
+  `biaya_pembinaan` double NOT NULL DEFAULT 0,
+  `biaya_pembungkus` double NOT NULL DEFAULT 0,
+  `biaya_rat` double NOT NULL DEFAULT 0,
+  `biaya_thr` double NOT NULL DEFAULT 0,
+  `biaya_pajak` double NOT NULL DEFAULT 0,
+  `biaya_admin` double NOT NULL DEFAULT 0,
+  `biaya_training` double NOT NULL DEFAULT 0,
+  `modal_disetor` double NOT NULL DEFAULT 0,
+  `lain_lain` double NOT NULL DEFAULT 0,
+  `kas` double NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -133,11 +206,27 @@ CREATE TABLE `cash_in_trans` (
 --
 
 INSERT INTO `cash_in_trans` (`id`, `id_main_cash`, `created_at`, `updated_at`) VALUES
-(1, 1, '2024-09-13 09:31:37', '2024-09-13 09:31:37'),
-(2, 2, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(3, 4, '2024-09-13 10:29:54', '2024-09-13 10:29:54'),
-(4, 6, '2024-09-13 10:57:52', '2024-09-13 10:57:52'),
-(5, 7, '2024-09-14 14:31:04', '2024-09-14 14:31:04');
+(5, 5, '2024-09-20 05:21:41', '2024-09-20 05:21:41');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cash_in_usipas`
+--
+
+CREATE TABLE `cash_in_usipas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_kas_usipa_trans` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `cash_in_usipas`
+--
+
+INSERT INTO `cash_in_usipas` (`id`, `id_kas_usipa_trans`, `created_at`, `updated_at`) VALUES
+(2, 2, '2024-09-22 14:18:17', '2024-09-22 14:18:17');
 
 -- --------------------------------------------------------
 
@@ -157,10 +246,21 @@ CREATE TABLE `cash_out_trans` (
 --
 
 INSERT INTO `cash_out_trans` (`id`, `id_main_cash`, `created_at`, `updated_at`) VALUES
-(1, 3, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(2, 5, '2024-09-13 10:31:25', '2024-09-13 10:31:25'),
-(3, 8, '2024-09-15 02:24:26', '2024-09-15 02:24:26'),
-(4, 9, '2024-09-15 02:24:26', '2024-09-15 02:24:26');
+(2, 4, '2024-09-20 05:15:58', '2024-09-20 05:15:58'),
+(3, 6, '2024-09-20 05:21:41', '2024-09-20 05:21:41');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cash_out_usipas`
+--
+
+CREATE TABLE `cash_out_usipas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_kas_usipa_trans` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -181,28 +281,52 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `log_saldos`
+-- Struktur dari tabel `kas_usipas`
 --
 
-CREATE TABLE `log_saldos` (
+CREATE TABLE `kas_usipas` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `main_cash_id` int(11) DEFAULT NULL,
-  `main_cash_trans_id` int(11) DEFAULT NULL,
-  `old_saldo` double DEFAULT NULL,
-  `new_saldo` double DEFAULT NULL,
-  `action_type` enum('insert','update','delete') DEFAULT NULL,
+  `date_usipa` date NOT NULL,
+  `saldo_usipa` double NOT NULL,
+  `saldo_before_usipa_trans` double DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `log_saldos`
+-- Dumping data untuk tabel `kas_usipas`
 --
 
-INSERT INTO `log_saldos` (`id`, `main_cash_id`, `main_cash_trans_id`, `old_saldo`, `new_saldo`, `action_type`, `created_at`, `updated_at`) VALUES
-(1, 15, NULL, 1200000, 1500000, 'insert', '2024-09-14 14:31:04', '2024-09-14 14:31:04'),
-(2, 16, NULL, 1500000, 1300000, 'insert', '2024-09-15 02:24:26', '2024-09-15 02:24:26'),
-(3, 16, NULL, 1300000, 1000000, 'insert', '2024-09-15 02:24:26', '2024-09-15 02:24:26');
+INSERT INTO `kas_usipas` (`id`, `date_usipa`, `saldo_usipa`, `saldo_before_usipa_trans`, `created_at`, `updated_at`) VALUES
+(5, '2024-09-22', 3545279, 3245279, '2024-09-22 14:18:17', '2024-09-22 14:19:30');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kas_usipa_trans`
+--
+
+CREATE TABLE `kas_usipa_trans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `kas_usipa_id` bigint(20) UNSIGNED NOT NULL,
+  `trans_date_usipa` date NOT NULL,
+  `keterangan_usipa` varchar(255) NOT NULL,
+  `periode_usipa` int(11) NOT NULL,
+  `status_usipa` enum('KM','KK') NOT NULL,
+  `jenis_transaksi_usipa` varchar(255) DEFAULT NULL,
+  `kategori_buku_besar_usipa` varchar(255) DEFAULT NULL,
+  `kredit_transaction_usipa` double DEFAULT NULL,
+  `debet_transaction_usipa` double DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `kas_usipa_trans`
+--
+
+INSERT INTO `kas_usipa_trans` (`id`, `kas_usipa_id`, `trans_date_usipa`, `keterangan_usipa`, `periode_usipa`, `status_usipa`, `jenis_transaksi_usipa`, `kategori_buku_besar_usipa`, `kredit_transaction_usipa`, `debet_transaction_usipa`, `created_at`, `updated_at`) VALUES
+(2, 5, '2024-09-22', 'Terima Angsuran tgl 2024-09-22', 1, 'KM', 'Terima Angsuran', 'simp_pokok', NULL, 300000, '2024-09-22 14:18:17', '2024-09-22 14:19:30');
 
 -- --------------------------------------------------------
 
@@ -214,7 +338,7 @@ CREATE TABLE `main_cashs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `date` date NOT NULL,
   `saldo` double NOT NULL,
-  `saldo_awal` double DEFAULT NULL,
+  `saldo_before_trans` double DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -223,14 +347,9 @@ CREATE TABLE `main_cashs` (
 -- Dumping data untuk tabel `main_cashs`
 --
 
-INSERT INTO `main_cashs` (`id`, `date`, `saldo`, `saldo_awal`, `created_at`, `updated_at`) VALUES
-(10, '2024-08-13', 500000, 300000, '2024-09-13 09:31:37', '2024-09-13 09:31:37'),
-(11, '2024-08-21', 600000, 500000, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(12, '2024-08-26', 800000, 600000, '2024-09-13 10:29:54', '2024-09-13 10:29:54'),
-(13, '2024-08-30', 700000, 800000, '2024-09-13 10:31:25', '2024-09-13 10:31:25'),
-(14, '2024-09-03', 1200000, 700000, '2024-09-13 10:57:52', '2024-09-13 10:57:52'),
-(15, '2024-09-18', 1500000, 1200000, '2024-09-14 14:31:04', '2024-09-14 14:31:04'),
-(16, '2024-09-20', 1000000, 1500000, '2024-09-15 02:24:26', '2024-09-15 02:24:26');
+INSERT INTO `main_cashs` (`id`, `date`, `saldo`, `saldo_before_trans`, `created_at`, `updated_at`) VALUES
+(3, '2024-10-07', 2845279, 3245279, '2024-09-20 05:15:58', '2024-09-20 06:49:08'),
+(4, '2024-10-11', 3245279, 2845279, '2024-09-20 05:21:41', '2024-09-20 06:49:08');
 
 -- --------------------------------------------------------
 
@@ -258,15 +377,9 @@ CREATE TABLE `main_cash_trans` (
 --
 
 INSERT INTO `main_cash_trans` (`id`, `main_cash_id`, `trans_date`, `keterangan`, `periode`, `status`, `jenis_transaksi`, `kategori_buku_besar`, `kredit_transaction`, `debet_transaction`, `created_at`, `updated_at`) VALUES
-(1, 10, '2024-08-13', 'Penjualan Barang Toko tgl 2024-08-13', 1, 'KM', 'Penjualan Barang Toko', 'bank_sp', NULL, 200000, '2024-09-13 09:31:37', '2024-09-13 09:31:37'),
-(2, 11, '2024-08-21', 'Penjualan Barang Toko tgl 2024-08-21', 2, 'KM', 'Penjualan Barang Toko', 'bank_sp', NULL, 200000, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(3, 11, '2024-08-21', 'Pembayaran Hutang Toko tgl 2024-08-21', 1, 'KK', 'Pembayaran Hutang Toko', 'hutang_toko', 100000, NULL, '2024-09-13 09:42:33', '2024-09-13 09:42:33'),
-(4, 12, '2024-08-26', 'Penjualan Barang Toko tgl 2024-08-26', 3, 'KM', 'Penjualan Barang Toko', 'bank_sp', NULL, 200000, '2024-09-13 10:29:54', '2024-09-13 10:29:54'),
-(5, 13, '2024-08-30', 'Pengeluaran Belanja Toko tgl 2024-08-30', 2, 'KK', 'Pengeluaran Belanja Toko', 'hutang_toko', 100000, NULL, '2024-09-13 10:31:25', '2024-09-13 10:31:25'),
-(6, 14, '2024-09-03', 'Penjualan Barang Toko tgl 2024-09-03', 1, 'KM', 'Penjualan Barang Toko', 'bank_sp', NULL, 500000, '2024-09-13 10:57:52', '2024-09-13 10:57:52'),
-(7, 15, '2024-09-18', 'Penjualan Barang Toko tgl 2024-09-18', 2, 'KM', 'Penjualan Barang Toko', 'bank_sp', NULL, 300000, '2024-09-14 14:31:04', '2024-09-14 14:31:04'),
-(8, 16, '2024-09-20', 'Pengeluaran Belanja Toko tgl 2024-09-20', 1, 'KK', 'Pengeluaran Belanja Toko', 'hutang_toko', 200000, NULL, '2024-09-15 02:24:26', '2024-09-15 02:24:26'),
-(9, 16, '2024-09-20', 'Pembayaran Hutang Toko tgl 2024-09-20', 2, 'KK', 'Pembayaran Hutang Toko', 'hutang_toko', 300000, NULL, '2024-09-15 02:24:26', '2024-09-15 02:24:26');
+(4, 3, '2024-10-07', 'Pengeluaran Simpanan tgl 2024-10-07', 1, 'KK', 'Pengeluaran Simpanan', 'simp_wajib', 400000, NULL, '2024-09-20 05:15:58', '2024-09-20 05:16:38'),
+(5, 4, '2024-10-11', 'Penjualan Barang Toko tgl 2024-10-11', 2, 'KM', 'Penjualan Barang Toko', 'dana_sosial', NULL, 500000, '2024-09-20 05:21:41', '2024-09-20 05:21:41'),
+(6, 4, '2024-10-11', 'Pembayaran Hutang Toko tgl 2024-10-11', 2, 'KK', 'Pembayaran Hutang Toko', 'hutang_toko', 100000, NULL, '2024-09-20 05:21:41', '2024-09-20 05:21:41');
 
 -- --------------------------------------------------------
 
@@ -295,7 +408,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2024_09_10_174739_create_buku_besar_cash_outs_table', 1),
 (9, '2024_09_10_174748_create_buku_besar_cash_ins_table', 1),
 (10, '2024_09_12_151806_create_main_cash_trans_table', 1),
-(11, '2024_09_14_091750_create_log_saldos_table', 2);
+(11, '2024_09_18_093159_create_saldos_table', 1),
+(12, '2024_09_22_085712_create_kas_usipas_table', 2),
+(13, '2024_09_22_085910_create_kas_usipa_trans_table', 2),
+(14, '2024_09_22_090559_create_cash_in_usipas_table', 2),
+(15, '2024_09_22_090613_create_cash_out_usipas_table', 2),
+(16, '2024_09_22_090712_create_buku_besar_usipa_cash_ins_table', 2),
+(17, '2024_09_22_090721_create_buku_besar_usipa_cash_outs_table', 2);
 
 -- --------------------------------------------------------
 
@@ -330,6 +449,26 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `saldos`
+--
+
+CREATE TABLE `saldos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `saldo_awal` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `saldos`
+--
+
+INSERT INTO `saldos` (`id`, `saldo_awal`, `created_at`, `updated_at`) VALUES
+(1, '3245279', '2024-09-18 12:01:36', '2024-09-18 12:01:36');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `users`
 --
 
@@ -351,7 +490,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `location`, `about_me`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'nicholas', 'tannicholas54@gmail.com', '$2y$10$fhixCYsgMR5Au4NcHqS92O2jHT8afMFlcam5BmFwJTq2nKP7pgXu2', NULL, NULL, NULL, NULL, '2024-09-13 08:53:25', '2024-09-13 08:53:25');
+(1, 'nicholas', 'tannicholas54@gmail.com', '$2y$10$ypJSLkHYBdSbImVqJy8VDePZ24QupNXEdldCwe5mHTB3xw6937PlG', NULL, NULL, NULL, NULL, '2024-09-18 11:43:46', '2024-09-18 11:43:46');
 
 --
 -- Indexes for dumped tables
@@ -370,15 +509,39 @@ ALTER TABLE `buku_besar_cash_outs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `buku_besar_usipa_cash_ins`
+--
+ALTER TABLE `buku_besar_usipa_cash_ins`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `buku_besar_usipa_cash_outs`
+--
+ALTER TABLE `buku_besar_usipa_cash_outs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `cash_in_trans`
 --
 ALTER TABLE `cash_in_trans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `cash_in_usipas`
+--
+ALTER TABLE `cash_in_usipas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `cash_out_trans`
 --
 ALTER TABLE `cash_out_trans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `cash_out_usipas`
+--
+ALTER TABLE `cash_out_usipas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -389,10 +552,17 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indeks untuk tabel `log_saldos`
+-- Indeks untuk tabel `kas_usipas`
 --
-ALTER TABLE `log_saldos`
+ALTER TABLE `kas_usipas`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `kas_usipa_trans`
+--
+ALTER TABLE `kas_usipa_trans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kas_usipa_trans_kas_usipa_id_foreign` (`kas_usipa_id`);
 
 --
 -- Indeks untuk tabel `main_cashs`
@@ -428,6 +598,12 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indeks untuk tabel `saldos`
+--
+ALTER TABLE `saldos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
@@ -448,7 +624,19 @@ ALTER TABLE `buku_besar_cash_ins`
 -- AUTO_INCREMENT untuk tabel `buku_besar_cash_outs`
 --
 ALTER TABLE `buku_besar_cash_outs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `buku_besar_usipa_cash_ins`
+--
+ALTER TABLE `buku_besar_usipa_cash_ins`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `buku_besar_usipa_cash_outs`
+--
+ALTER TABLE `buku_besar_usipa_cash_outs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `cash_in_trans`
@@ -457,10 +645,22 @@ ALTER TABLE `cash_in_trans`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT untuk tabel `cash_in_usipas`
+--
+ALTER TABLE `cash_in_usipas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `cash_out_trans`
 --
 ALTER TABLE `cash_out_trans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `cash_out_usipas`
+--
+ALTER TABLE `cash_out_usipas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -469,34 +669,46 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `log_saldos`
+-- AUTO_INCREMENT untuk tabel `kas_usipas`
 --
-ALTER TABLE `log_saldos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `kas_usipas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `kas_usipa_trans`
+--
+ALTER TABLE `kas_usipa_trans`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `main_cashs`
 --
 ALTER TABLE `main_cashs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `main_cash_trans`
 --
 ALTER TABLE `main_cash_trans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `saldos`
+--
+ALTER TABLE `saldos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -507,6 +719,12 @@ ALTER TABLE `users`
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `kas_usipa_trans`
+--
+ALTER TABLE `kas_usipa_trans`
+  ADD CONSTRAINT `kas_usipa_trans_kas_usipa_id_foreign` FOREIGN KEY (`kas_usipa_id`) REFERENCES `kas_usipas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `main_cash_trans`
