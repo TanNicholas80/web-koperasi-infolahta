@@ -79,7 +79,7 @@
                             $kasKeluarOptions = [
                             'bank_sp' => 'Bank SP',
                             'bank_induk' => 'Bank Induk',
-                            'simpan_pinjam' => 'Simpan Pinjam',
+                            'simpan_pinjam' => 'Piutang Uang',
                             'inventaris' => 'Inventaris',
                             'penyertaan_puskop' => 'Penyertaan Puskop',
                             'hutang_toko' => 'Hutang Toko',

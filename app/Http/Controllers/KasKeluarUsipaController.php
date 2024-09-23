@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportKasKeluarUsipa;
 use App\Models\CashOutUsipa;
 use App\Models\KasUsipaTrans;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KasKeluarUsipaController extends Controller
 {
@@ -30,5 +32,12 @@ class KasKeluarUsipaController extends Controller
             ->get();
 
         return view('kasKeluarUsipa.index', compact('kasUsipa', 'totalKredit', 'month', 'year'));
+    }
+
+    public function exportKasKeluarUsipa(Request $req)
+    {
+        $year = $req->input('year');
+
+        return Excel::download(new ExportKasKeluarUsipa($year), 'KasKeluarUsipa-' . $year . '.xlsx');
     }
 }
