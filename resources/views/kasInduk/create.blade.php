@@ -184,11 +184,18 @@
                 const inputs = newTransactionGroup.querySelectorAll('input');
                 inputs.forEach(input => input.value = '');
 
-                const index = transactionGroups.length; // Update index dynamically
+                const index = transactionGroups.length; // Update index dynamically for new transaction
+
                 newTransactionGroup.querySelectorAll('input, select').forEach(field => {
-                    if (field.name.includes('transactions[0][')) {
-                        field.name = field.name.replace('transactions[0][',
-                            `transactions[${index}][`);
+                    const name = field.name;
+
+                    // Find the part of the name that contains the index using regex to locate digits
+                    const nameParts = name.match(/^transactions\[(\d+)\](.*)$/);
+
+                    if (nameParts) {
+                        // Reconstruct the name with the updated index
+                        const newName = `transactions[${index}]${nameParts[2]}`;
+                        field.name = newName;
                     }
                 });
 
