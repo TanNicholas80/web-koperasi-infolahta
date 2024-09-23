@@ -49,7 +49,7 @@
                             'simpanan_pokok' => 'Simpanan Pokok',
                             'sipanan_wajib' => 'Simpanan Wajib',
                             'sipanan_khusus' => 'Simpanan Khusus',
-                            'sipanan_tunai' => 'Simpanan Tunai',
+                            'penjualan_tunai' => 'Penjualan Tunai',
                             'jasa_sp' => 'Jasa SP',
                             'provinsi' => 'Provinsi',
                             'shu_puskop' => 'SHU Puskop',
@@ -79,7 +79,7 @@
                             $kasKeluarOptions = [
                             'bank_sp' => 'Bank SP',
                             'bank_induk' => 'Bank Induk',
-                            'simpan_pinjam' => 'Piutang Uang',
+                            'piutang_uang' => 'Piutang Uang',
                             'inventaris' => 'Inventaris',
                             'penyertaan_puskop' => 'Penyertaan Puskop',
                             'hutang_toko' => 'Hutang Toko',

@@ -191,9 +191,9 @@ class KasInduksController extends Controller
                             $shouldSave = true;
                             break;
 
-                        case 'sipanan_tunai':
+                        case 'penjualan_tunai':
                             $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                            $bukuBesarCashIn->sipanan_tunai = $transactionData['debet_transaction'];
+                            $bukuBesarCashIn->penjualan_tunai = $transactionData['debet_transaction'];
                             $shouldSave = true;
                             break;
 
@@ -268,9 +268,9 @@ class KasInduksController extends Controller
                             $shouldSave = true;
                             break;
 
-                        case 'simpan_pinjam':
+                        case 'piutang_uang':
                             $bukuBesarCashOut->kas = $transactionData['kredit_transaction'];
-                            $bukuBesarCashOut->simpan_pinjam = $transactionData['kredit_transaction'];
+                            $bukuBesarCashOut->piutang_uang = $transactionData['kredit_transaction'];
                             $shouldSave = true;
                             break;
 
@@ -659,9 +659,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'sipanan_tunai':
+                            case 'penjualan_tunai':
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                                $bukuBesarCashIn->sipanan_tunai = $transactionData['debet_transaction'];
+                                $bukuBesarCashIn->penjualan_tunai = $transactionData['debet_transaction'];
                                 $shouldSave = true;
                                 break;
 
@@ -720,7 +720,7 @@ class KasInduksController extends Controller
                     $bukuBesarCashIn->simpanan_pokok = 0;
                     $bukuBesarCashIn->sipanan_wajib = 0;
                     $bukuBesarCashIn->sipanan_khusus = 0;
-                    $bukuBesarCashIn->sipanan_tunai = 0;
+                    $bukuBesarCashIn->penjualan_tunai = 0;
                     $bukuBesarCashIn->jasa_sp = 0;
                     $bukuBesarCashIn->provinsi = 0;
                     $bukuBesarCashIn->shu_puskop = 0;
@@ -800,9 +800,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'sipanan_tunai':
+                            case 'penjualan_tunai':
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                                $bukuBesarCashIn->sipanan_tunai = $transactionData['debet_transaction'];
+                                $bukuBesarCashIn->penjualan_tunai = $transactionData['debet_transaction'];
                                 $shouldSave = true;
                                 break;
 
@@ -905,9 +905,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'simpan_pinjam':
+                            case 'piutang_uang':
                                 $bukuBesarCashOut->kas = $transactionData['kredit_transaction'];
-                                $bukuBesarCashOut->simpan_pinjam = $transactionData['kredit_transaction'];
+                                $bukuBesarCashOut->piutang_uang = $transactionData['kredit_transaction'];
                                 $shouldSave = true;
                                 break;
 
@@ -1075,7 +1075,7 @@ class KasInduksController extends Controller
 
                     $bukuBesarCashOut->bank_sp = 0;
                     $bukuBesarCashOut->bank_induk = 0;
-                    $bukuBesarCashOut->simpan_pinjam = 0;
+                    $bukuBesarCashOut->piutang_uang = 0;
                     $bukuBesarCashOut->inventaris = 0;
                     $bukuBesarCashOut->penyertaan_puskop = 0;
                     $bukuBesarCashOut->hutang_toko = 0;
@@ -1119,9 +1119,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'simpan_pinjam':
+                            case 'piutang_uang':
                                 $bukuBesarCashOut->kas = $transactionData['kredit_transaction'];
-                                $bukuBesarCashOut->simpan_pinjam = $transactionData['kredit_transaction'];
+                                $bukuBesarCashOut->piutang_uang = $transactionData['kredit_transaction'];
                                 $shouldSave = true;
                                 break;
 

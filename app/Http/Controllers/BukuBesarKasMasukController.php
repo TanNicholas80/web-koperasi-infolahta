@@ -18,7 +18,7 @@ class BukuBesarKasMasukController extends Controller
         $month = $req->input('month', Carbon::now()->month);
 
         $totals = buku_besar_cash_ins::join('main_cash_trans', 'buku_besar_cash_ins.id_main_cash_trans', '=', 'main_cash_trans.id')
-        ->select(DB::raw('
+            ->select(DB::raw('
         SUM(buku_besar_cash_ins.kas) as total_kas,
         SUM(buku_besar_cash_ins.bank_sp) as total_bank_sp,
         SUM(buku_besar_cash_ins.bank_induk) as total_bank_induk,
@@ -31,16 +31,16 @@ class BukuBesarKasMasukController extends Controller
         SUM(buku_besar_cash_ins.simpanan_pokok) as total_simpanan_pokok,
         SUM(buku_besar_cash_ins.sipanan_wajib) as total_sipanan_wajib,
         SUM(buku_besar_cash_ins.sipanan_khusus) as total_sipanan_khusus,
-        SUM(buku_besar_cash_ins.sipanan_tunai) as total_sipanan_tunai,
+        SUM(buku_besar_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_cash_ins.jasa_sp) as total_jasa_sp,
         SUM(buku_besar_cash_ins.provinsi) as total_provinsi,
         SUM(buku_besar_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_cash_ins.inv_usipa) as total_inv_usipa,
         SUM(buku_besar_cash_ins.lain_lain) as total_lain_lain
     '))
-        ->whereYear('main_cash_trans.trans_date', $year)
-        ->whereMonth('main_cash_trans.trans_date', $month)
-        ->first();
+            ->whereYear('main_cash_trans.trans_date', $year)
+            ->whereMonth('main_cash_trans.trans_date', $month)
+            ->first();
 
         $bukuMasuk = buku_besar_cash_ins::all();
 

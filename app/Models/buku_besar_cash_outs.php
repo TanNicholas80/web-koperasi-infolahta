@@ -14,7 +14,7 @@ class buku_besar_cash_outs extends Model
         'kas',
         'bank_sp',
         'bank_induk',
-        'simpan_pinjam',
+        'piutang_uang',
         'inventaris',
         'penyertaan_puskop',
         'hutang_toko',

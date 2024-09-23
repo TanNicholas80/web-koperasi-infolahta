@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('kas')->nullable()->default(0);
             $table->float('bank_sp')->nullable()->default(0);
             $table->float('bank_induk')->nullable()->default(0);
-            $table->float('simpan_pinjam')->nullable()->default(0);
+            $table->float('piutang_uang')->nullable()->default(0);
             $table->float('inventaris')->nullable()->default(0);
             $table->float('penyertaan_puskop')->nullable()->default(0);
             $table->float('hutang_toko')->nullable()->default(0);
