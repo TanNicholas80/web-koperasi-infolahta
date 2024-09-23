@@ -209,7 +209,7 @@ class KasUsipaController extends Controller
                             $shouldSave = true;
                             break;
 
-                        case 'provisi':
+                        case 'provinsi':
                             // Logika khusus untuk kategori PROVISI
                             $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
                             $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
@@ -669,8 +669,8 @@ class KasUsipaController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provisi':
-                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction_usipa'];
+                            case 'provinsi':
+                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
                                 $shouldSave = true;
                                 break;
@@ -714,7 +714,7 @@ class KasUsipaController extends Controller
                     $bukuBesarCashIn->simp_khusus = 0;
                     $bukuBesarCashIn->penjualan_tunai = 0;
                     $bukuBesarCashIn->jasa_sp = 0;
-                    $bukuBesarCashIn->provisi = 0;
+                    $bukuBesarCashIn->provinsi = 0;
                     $bukuBesarCashIn->shu_puskop = 0;
                     $bukuBesarCashIn->modal_disetor = 0;
 
@@ -803,8 +803,8 @@ class KasUsipaController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provisi':
-                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction_usipa'];
+                            case 'provinsi':
+                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
                                 $shouldSave = true;
                                 break;
@@ -1286,7 +1286,7 @@ class KasUsipaController extends Controller
         $kasUsipa = KasUsipa::with('transactions')->findOrFail($id);
         $kasUsipaAfter = KasUsipa::where('id', '>', $id)->with('transactions')->get();
 
-        $currentSaldo = $kasUsipa->saldo_before_trans;
+        $currentSaldo = $kasUsipa->saldo_before_usipa_trans;
         foreach ($kasUsipaAfter as $cashAfter) {
             // Inisialisasi variabel untuk menyimpan total debet transaksi
             $totalKreditTransactionAfter = 0;
