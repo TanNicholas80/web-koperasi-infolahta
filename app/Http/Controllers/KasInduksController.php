@@ -43,8 +43,8 @@ class KasInduksController extends Controller
     {
         $date = Carbon::parse($request->date);
 
-        $month_start = $date->format('m');
-        $year_start = $date->format('Y');
+        // $month_start = $date->format('m');
+        // $year_start = $date->format('Y');
 
         // Ambil saldo terakhir dari database
         $lastCash = main_cashs::latest('created_at')->first();
@@ -66,34 +66,31 @@ class KasInduksController extends Controller
         }
         $mainCash->save();
 
-        $periode = 1;
-
         foreach ($request->transactions as $transactionData) {
-            $keterangan = $transactionData['jenis_transaksi'] .
-                ' tgl ' . $request->date;
+            $keterangan = $transactionData['jenis_transaksi'];
 
             $status = $transactionData['status'];
 
             $lastTransaction = main_cash_trans::where('status', $status)->orderBy('trans_date', 'desc')->first();
 
-            if ($lastTransaction) {
-                $lastTransDate = Carbon::parse($lastTransaction->trans_date);
-                $lastMonth = $lastTransDate->format('m');
-                $lastYear = $lastTransDate->format('Y');
-                $lastStatus = $lastTransaction->status;
+            // if ($lastTransaction) {
+            //     $lastTransDate = Carbon::parse($lastTransaction->trans_date);
+            //     $lastMonth = $lastTransDate->format('m');
+            //     $lastYear = $lastTransDate->format('Y');
+            //     $lastStatus = $lastTransaction->status;
 
-                // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
-                if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
-                    // Jika bulan dan tahun sama, increment periode dari entri terakhir
-                    $periode = $lastTransaction->periode + 1;
-                } else {
-                    // Jika bulan atau tahun berbeda, reset periode ke 1
-                    $periode = 1;
-                }
-            } else {
-                // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
-                $periode = 1;
-            }
+            //     // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
+            //     if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
+            //         // Jika bulan dan tahun sama, increment periode dari entri terakhir
+            //         $periode = $lastTransaction->periode + 1;
+            //     } else {
+            //         // Jika bulan atau tahun berbeda, reset periode ke 1
+            //         $periode = 1;
+            //     }
+            // } else {
+            //     // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
+            //     $periode = 1;
+            // }
 
             // Simpan transaksi ke dalam tabel utama `transactions`
             $transaction = $mainCash->transactions()->create([
@@ -101,7 +98,7 @@ class KasInduksController extends Controller
                 'status' => $status,
                 'jenis_transaksi' => $transactionData['jenis_transaksi'],
                 'keterangan' => $keterangan,
-                'periode' => $periode,
+                'periode' => $transactionData['periode'],
                 'kategori_buku_besar' => $transactionData['kategori_buku_besar'],
                 'debet_transaction' => $status == 'KM' ? $transactionData['debet_transaction'] : null, // Isi debet jika KM
                 'kredit_transaction' => $status == 'KK' ? $transactionData['kredit_transaction'] : null, // Isi kredit jika KK
@@ -472,43 +469,40 @@ class KasInduksController extends Controller
 
         $date = Carbon::parse($request->date);
 
-        $month_start = $date->format('m');
-        $year_start = $date->format('Y');
+        // $month_start = $date->format('m');
+        // $year_start = $date->format('Y');
 
         $mainCash->date = $date->format('Y-m-d');
         $mainCash->save();
-        // Get Main cash Transaction
-        $periode = 1;
 
         foreach ($request->transactions as $transactionData) {
             // Dapatkan transaksi berdasarkan ID dari form
             $transaction = main_cash_trans::findOrFail($transactionData['id']);
 
-            $keterangan = $transactionData['jenis_transaksi'] .
-                ' tgl ' . $request->date;
+            $keterangan = $transactionData['jenis_transaksi'];
 
             $status = $transactionData['status'];
 
-            $lastTransaction = main_cash_trans::where('status', $status)->orderBy('trans_date', 'desc')->first();
+            // $lastTransaction = main_cash_trans::where('status', $status)->orderBy('trans_date', 'desc')->first();
 
-            if ($lastTransaction) {
-                $lastTransDate = Carbon::parse($lastTransaction->trans_date);
-                $lastMonth = $lastTransDate->format('m');
-                $lastYear = $lastTransDate->format('Y');
-                $lastStatus = $lastTransaction->status;
+            // if ($lastTransaction) {
+            //     $lastTransDate = Carbon::parse($lastTransaction->trans_date);
+            //     $lastMonth = $lastTransDate->format('m');
+            //     $lastYear = $lastTransDate->format('Y');
+            //     $lastStatus = $lastTransaction->status;
 
-                // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
-                if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
-                    // Jika bulan dan tahun sama, increment periode dari entri terakhir
-                    $periode = $transaction->periode;
-                } else {
-                    // Jika bulan atau tahun berbeda, reset periode ke 1
-                    $periode = 1;
-                }
-            } else {
-                // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
-                $periode = 1;
-            }
+            //     // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
+            //     if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
+            //         // Jika bulan dan tahun sama, increment periode dari entri terakhir
+            //         $periode = $transaction->periode;
+            //     } else {
+            //         // Jika bulan atau tahun berbeda, reset periode ke 1
+            //         $periode = 1;
+            //     }
+            // } else {
+            //     // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
+            //     $periode = 1;
+            // }
 
             if ($transaction->status !== $status) {
                 // Hapus record dari tabel cash_in_trans
@@ -541,7 +535,7 @@ class KasInduksController extends Controller
             $transaction->status = $status;
             $transaction->jenis_transaksi = $transactionData['jenis_transaksi'];
             $transaction->keterangan = $keterangan;
-            $transaction->periode = $periode;
+            $transaction->periode = $transactionData['periode'];
             $transaction->kategori_buku_besar = $transactionData['kategori_buku_besar'];
             $transaction->debet_transaction = $status == 'KM' ? $transactionData['debet_transaction'] : null;
             $transaction->kredit_transaction = $status == 'KK' ? $transactionData['kredit_transaction'] : null;
@@ -550,8 +544,9 @@ class KasInduksController extends Controller
             if ($status === 'KM') {
                 $totalDebetTransactionNow = main_cash_trans::where('main_cash_id', $mainCash->id)
                     ->sum('debet_transaction');
+                $totalKreditTransactionNow = main_cash_trans::where('main_cash_id', $mainCash->id)->sum('kredit_transaction');
                 $mainCash->update([
-                    'saldo' => $mainCash->saldo_before_trans + $totalDebetTransactionNow,
+                    'saldo' => $mainCash->saldo_before_trans + $totalDebetTransactionNow - $totalKreditTransactionNow,
                 ]);
 
                 // Update Setiap Saldo dan saldo before trans
@@ -850,8 +845,10 @@ class KasInduksController extends Controller
             } elseif ($status === 'KK') {
                 $totalKreditTransactionNow = main_cash_trans::where('main_cash_id', $mainCash->id)
                     ->sum('kredit_transaction');
+                $totalDebetTransactionNow = main_cash_trans::where('main_cash_id', $mainCash->id)
+                    ->sum('debet_transaction');
                 $mainCash->update([
-                    'saldo' => $mainCash->saldo_before_trans - $totalKreditTransactionNow,
+                    'saldo' => $mainCash->saldo_before_trans - $totalKreditTransactionNow + $totalDebetTransactionNow,
                 ]);
 
                 $currentSaldo = $mainCash->saldo;

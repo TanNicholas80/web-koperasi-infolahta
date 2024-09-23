@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('kasUsipa', KasUsipaController::class);
 
 	Route::post('/saldo/create', [SaldoController::class, 'create'])->name('saldo.create');
+	Route::post('/saldo-usipa/create', [SaldoController::class, 'create_usipa'])->name('saldo-usipa.create');
 
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);

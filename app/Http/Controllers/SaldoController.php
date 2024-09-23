@@ -19,4 +19,16 @@ class SaldoController extends Controller
 
         return redirect()->route('kasInduk.index')->with('success', 'Saldo awal berhasil ditambahkan');
     }
+
+    public function create_usipa(Request $request)
+    {
+        $saldo = new Saldo();
+
+        $saldo->saldo_awal = $request->saldo_awal;
+        $saldo->save();
+
+        // $kasInduk = main_cashs::with('transactions')->get();
+
+        return redirect()->route('kasUsipa.index')->with('success', 'Saldo awal berhasil ditambahkan');
+    }
 }

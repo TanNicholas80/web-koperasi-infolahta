@@ -39,8 +39,8 @@ class KasUsipaController extends Controller
     {
         $date = Carbon::parse($request->date_usipa);
 
-        $month_start = $date->format('m');
-        $year_start = $date->format('Y');
+        // $month_start = $date->format('m');
+        // $year_start = $date->format('Y');
 
         // Ambil saldo terakhir dari database
         $lastCash = KasUsipa::latest('created_at')->first();
@@ -61,41 +61,38 @@ class KasUsipaController extends Controller
         }
         $kasUsipa->save();
 
-        $periode = 1;
-
         foreach ($request->transactions as $transactionData) {
-            $keterangan = $transactionData['jenis_transaksi_usipa'] .
-                ' tgl ' . $request->date_usipa;
+            $keterangan = $transactionData['jenis_transaksi_usipa'];
 
             $status = $transactionData['status_usipa'];
 
-            $lastTransaction = KasUsipaTrans::where('status_usipa', $status)->orderBy('trans_date_usipa', 'desc')->first();
+            // $lastTransaction = KasUsipaTrans::where('status_usipa', $status)->orderBy('trans_date_usipa', 'desc')->first();
 
-            if ($lastTransaction) {
-                $lastTransDate = Carbon::parse($lastTransaction->trans_date_usipa);
-                $lastMonth = $lastTransDate->format('m');
-                $lastYear = $lastTransDate->format('Y');
-                $lastStatus = $lastTransaction->status_usipa;
+            // if ($lastTransaction) {
+            //     $lastTransDate = Carbon::parse($lastTransaction->trans_date_usipa);
+            //     $lastMonth = $lastTransDate->format('m');
+            //     $lastYear = $lastTransDate->format('Y');
+            //     $lastStatus = $lastTransaction->status_usipa;
 
-                // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
-                if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
-                    // Jika bulan dan tahun sama, increment periode dari entri terakhir
-                    $periode = $lastTransaction->periode_usipa + 1;
-                } else {
-                    // Jika bulan atau tahun berbeda, reset periode ke 1
-                    $periode = 1;
-                }
-            } else {
-                // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
-                $periode = 1;
-            }
+            //     // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
+            //     if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
+            //         // Jika bulan dan tahun sama, increment periode dari entri terakhir
+            //         $periode = $lastTransaction->periode_usipa + 1;
+            //     } else {
+            //         // Jika bulan atau tahun berbeda, reset periode ke 1
+            //         $periode = 1;
+            //     }
+            // } else {
+            //     // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
+            //     $periode = 1;
+            // }
 
             $transaction = $kasUsipa->transactions()->create([
                 'trans_date_usipa' => $request->date_usipa,
                 'status_usipa' => $status,
                 'jenis_transaksi_usipa' => $transactionData['jenis_transaksi_usipa'],
                 'keterangan_usipa' => $keterangan,
-                'periode_usipa' => $periode,
+                'periode_usipa' => $transactionData['periode_usipa'],
                 'kategori_buku_besar_usipa' => $transactionData['kategori_buku_besar_usipa'],
                 'debet_transaction_usipa' => $status == 'KM' ? $transactionData['debet_transaction_usipa'] : null, // Isi debet jika KM
                 'kredit_transaction_usipa' => $status == 'KK' ? $transactionData['kredit_transaction_usipa'] : null, // Isi kredit jika KK
@@ -473,42 +470,39 @@ class KasUsipaController extends Controller
 
         $date = Carbon::parse($request->date_usipa);
 
-        $month_start = $date->format('m');
-        $year_start = $date->format('Y');
+        // $month_start = $date->format('m');
+        // $year_start = $date->format('Y');
 
         $kasUsipa->date_usipa = $date->format('Y-m-d');
         $kasUsipa->save();
-        // Get Main cash Transaction
-        $periode = 1;
 
         foreach ($request->transactions as $transactionData) {
             $transaction = KasUsipaTrans::findOrFail($transactionData['id']);
 
-            $keterangan = $transactionData['jenis_transaksi_usipa'] .
-                ' tgl ' . $request->date_usipa;
+            $keterangan = $transactionData['jenis_transaksi_usipa'];
 
             $status = $transactionData['status_usipa'];
 
-            $lastTransaction = KasUsipaTrans::where('status_usipa', $status)->orderBy('trans_date_usipa', 'desc')->first();
+            // $lastTransaction = KasUsipaTrans::where('status_usipa', $status)->orderBy('trans_date_usipa', 'desc')->first();
 
-            if ($lastTransaction) {
-                $lastTransDate = Carbon::parse($lastTransaction->trans_date_usipa);
-                $lastMonth = $lastTransDate->format('m');
-                $lastYear = $lastTransDate->format('Y');
-                $lastStatus = $lastTransaction->status_usipa;
+            // if ($lastTransaction) {
+            //     $lastTransDate = Carbon::parse($lastTransaction->trans_date_usipa);
+            //     $lastMonth = $lastTransDate->format('m');
+            //     $lastYear = $lastTransDate->format('Y');
+            //     $lastStatus = $lastTransaction->status_usipa;
 
-                // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
-                if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
-                    // Jika bulan dan tahun sama, increment periode dari entri terakhir
-                    $periode = $transaction->periode_usipa;
-                } else {
-                    // Jika bulan atau tahun berbeda, reset periode ke 1
-                    $periode = 1;
-                }
-            } else {
-                // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
-                $periode = 1;
-            }
+            //     // Ambil transaksi terakhir di cash_in_trans berdasarkan cash_in_id dan periode
+            //     if ($lastMonth == $month_start && $lastYear == $year_start && $lastStatus == $status) {
+            //         // Jika bulan dan tahun sama, increment periode dari entri terakhir
+            //         $periode = $transaction->periode_usipa;
+            //     } else {
+            //         // Jika bulan atau tahun berbeda, reset periode ke 1
+            //         $periode = 1;
+            //     }
+            // } else {
+            //     // Jika tidak ada transaksi sebelumnya, mulai dari periode 1
+            //     $periode = 1;
+            // }
 
             if ($transaction->status_usipa !== $status) {
                 // Hapus record dari tabel cash_in_trans
@@ -540,7 +534,7 @@ class KasUsipaController extends Controller
             $transaction->status_usipa = $status;
             $transaction->jenis_transaksi_usipa = $transactionData['jenis_transaksi_usipa'];
             $transaction->keterangan_usipa = $keterangan;
-            $transaction->periode_usipa = $periode;
+            $transaction->periode_usipa = $transactionData['periode_usipa'];
             $transaction->kategori_buku_besar_usipa = $transactionData['kategori_buku_besar_usipa'];
             $transaction->debet_transaction_usipa = $status == 'KM' ? $transactionData['debet_transaction_usipa'] : null;
             $transaction->kredit_transaction_usipa = $status == 'KK' ? $transactionData['kredit_transaction_usipa'] : null;
@@ -549,8 +543,10 @@ class KasUsipaController extends Controller
             if ($status === 'KM') {
                 $totalDebetTransactionNow = KasUsipaTrans::where('kas_usipa_id', $kasUsipa->id)
                     ->sum('debet_transaction_usipa');
+                $totalKreditTransactionNow = KasUsipaTrans::where('kas_usipa_id', $kasUsipa->id)
+                    ->sum('kredit_transaction_usipa');
                 $kasUsipa->update([
-                    'saldo_usipa' => $kasUsipa->saldo_before_usipa_trans + $totalDebetTransactionNow,
+                    'saldo_usipa' => $kasUsipa->saldo_before_usipa_trans + $totalDebetTransactionNow - $totalKreditTransactionNow,
                 ]);
 
                 $currentSaldo = $kasUsipa->saldo_usipa;
@@ -835,8 +831,10 @@ class KasUsipaController extends Controller
             } elseif ($status === 'KK') {
                 $totalKreditTransactionNow = KasUsipaTrans::where('kas_usipa_id', $kasUsipa->id)
                     ->sum('kredit_transaction_usipa');
+                $totalDebetTransactionNow = KasUsipaTrans::where('kas_usipa_id', $kasUsipa->id)
+                    ->sum('debet_transaction_usipa');
                 $kasUsipa->update([
-                    'saldo_usipa' => $kasUsipa->saldo_before_usipa_trans - $totalKreditTransactionNow,
+                    'saldo_usipa' => $kasUsipa->saldo_before_usipa_trans - $totalKreditTransactionNow + $totalDebetTransactionNow,
                 ]);
 
                 $currentSaldo = $kasUsipa->saldo_usipa;

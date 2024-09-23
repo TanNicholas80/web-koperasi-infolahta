@@ -31,6 +31,11 @@
                     <input type="text" name="transactions[0][jenis_transaksi_usipa]" class="form-control" required>
                 </div>
 
+                <div class="form-group mb-3">
+                    <label for="periode_usipa">Periode</label>
+                    <input type="number" name="transactions[0][periode_usipa]" class="form-control" required>
+                </div>
+
                 <!-- Input untuk kategori buku besar dan debet_transaction, disembunyikan dulu -->
                 <div class="kas-masuk-fields" style="display: none;">
                     <div class="form-group mb-3">
