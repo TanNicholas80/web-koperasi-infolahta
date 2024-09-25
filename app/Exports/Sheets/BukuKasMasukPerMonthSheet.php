@@ -237,7 +237,7 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
             SUM(buku_besar_cash_ins.simpanan_pokok) as total_simpanan_pokok,
             SUM(buku_besar_cash_ins.sipanan_wajib) as total_sipanan_wajib,
             SUM(buku_besar_cash_ins.sipanan_khusus) as total_sipanan_khusus,
-            SUM(buku_besar_cash_ins.sipanan_tunai) as total_sipanan_tunai,
+            SUM(buku_besar_cash_ins.penjualan_tunai) as total_penjualan_tunai,
             SUM(buku_besar_cash_ins.jasa_sp) as total_jasa_sp,
             SUM(buku_besar_cash_ins.provinsi) as total_provinsi,
             SUM(buku_besar_cash_ins.shu_puskop) as total_shu_puskop,
