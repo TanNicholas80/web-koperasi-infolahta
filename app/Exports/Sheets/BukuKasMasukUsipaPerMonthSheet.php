@@ -43,6 +43,13 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
                 'bold' => true, // Membuat teks header menjadi tebal
             ],
         ]);
+        $currencyColumns = ['F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
+        foreach ($currencyColumns as $column) {
+            $sheet->getStyle($column . '2:' . $column . '1000')->getNumberFormat()->setFormatCode('[$Rp-421] #,##0.00');
+        }
+        foreach (range('A', 'V') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
     }
 
     public function columnWidths(): array
@@ -67,7 +74,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
             'Q' => 25,  // Simpanan Khusus
             'R' => 25,  // Simpanan Tunai
             'S' => 20,  // Jasa SP
-            'T' => 20,  // Provinsi
+            'T' => 20,  // Provisi
             'U' => 20,  // SHU Puskop
             'V' => 20,  // Investasi USIPA
         ];
@@ -91,7 +98,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         SUM(buku_besar_usipa_cash_ins.simp_khusus) as total_simp_khusus,
         SUM(buku_besar_usipa_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_usipa_cash_ins.jasa_sp) as total_jasa_sp,
-        SUM(buku_besar_usipa_cash_ins.provisi) as total_provisi,
+        SUM(buku_besar_usipa_cash_ins.provinsi) as total_provinsi,
         SUM(buku_besar_usipa_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_usipa_cash_ins.modal_disetor) as total_modal_disetor
     '))

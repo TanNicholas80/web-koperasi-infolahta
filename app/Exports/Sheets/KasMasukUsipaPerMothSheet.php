@@ -46,6 +46,13 @@ class KasMasukUsipaPerMothSheet implements FromView, WithTitle, WithColumnWidths
                 'bold' => true, // Membuat teks header menjadi tebal
             ],
         ]);
+        $currencyColumns = ['F'];
+        foreach ($currencyColumns as $column) {
+            $sheet->getStyle($column . '2:' . $column . '1000')->getNumberFormat()->setFormatCode('[$Rp-421] #,##0.00');
+        }
+        foreach (range('A', 'F') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
     }
 
     public function columnWidths(): array
