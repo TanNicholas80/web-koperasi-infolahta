@@ -12,7 +12,8 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidths, WithStyles {
+class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidths, WithStyles
+{
     protected $year;
     protected $month;
 
@@ -76,7 +77,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
     public function view(): View
     {
         $totals = BukuBesarUsipaCashIn::join('kas_usipa_trans', 'buku_besar_usipa_cash_ins.id_kas_usipa_trans', '=', 'kas_usipa_trans.id')
-        ->select(DB::raw('
+            ->select(DB::raw('
         SUM(buku_besar_usipa_cash_ins.kas) as total_kas,
         SUM(buku_besar_usipa_cash_ins.bank_sp) as total_bank_sp,
         SUM(buku_besar_usipa_cash_ins.bank_induk) as total_bank_induk,
@@ -91,13 +92,13 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         SUM(buku_besar_usipa_cash_ins.simp_khusus) as total_simp_khusus,
         SUM(buku_besar_usipa_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_usipa_cash_ins.jasa_sp) as total_jasa_sp,
-        SUM(buku_besar_usipa_cash_ins.provisi) as total_provisi,
+        SUM(buku_besar_usipa_cash_ins.provinsi) as total_provinsi,
         SUM(buku_besar_usipa_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_usipa_cash_ins.modal_disetor) as total_modal_disetor
     '))
-        ->whereYear('kas_usipa_trans.trans_date_usipa', $this->year)
-        ->whereMonth('kas_usipa_trans.trans_date_usipa', $this->month)
-        ->first();
+            ->whereYear('kas_usipa_trans.trans_date_usipa', $this->year)
+            ->whereMonth('kas_usipa_trans.trans_date_usipa', $this->month)
+            ->first();
 
         $bukuMasuk = BukuBesarUsipaCashIn::all();
 
@@ -116,7 +117,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         ]);
     }
 
-        /**
+    /**
      * Define the sheet title
      */
     public function title(): string
@@ -144,4 +145,3 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         return "{$monthName}";
     }
 }
-?>
