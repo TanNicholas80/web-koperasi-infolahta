@@ -25,7 +25,7 @@ class buku_besar_cash_ins extends Model
         'sipanan_khusus',
         'penjualan_tunai',
         'jasa_sp',
-        'provinsi',
+        'provisi',
         'shu_puskop',
         'inv_usipa',
         'lain_lain',
