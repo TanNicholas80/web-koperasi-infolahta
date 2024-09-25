@@ -69,7 +69,7 @@ class KasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidt
         $ids = $kasKeluar->pluck('id_kas_usipa_trans'); // Get all id_main_cash values
 
         $totalKredit = KasUsipaTrans::whereYear('trans_date_usipa', $this->year)
-            ->whereMonth('trans_date_usipa', $$this->month)
+            ->whereMonth('trans_date_usipa', $this->month)
             ->whereIn('id', $ids)
             ->sum('kredit_transaction_usipa');
 
