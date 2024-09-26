@@ -32,7 +32,7 @@
             'sipanan_khusus' => 'Simpanan Khusus',
             'penjualan_tunai' => 'Penjualan Tunai',
             'jasa_sp' => 'Jasa SP',
-            'provinsi' => 'Provinsi',
+            'provisi' => 'Provisi',
             'shu_puskop' => 'SHU Puskop',
             'inv_usipa' => 'Investasi USIPA',
             'lain_lain' => 'Lain-Lain',
@@ -69,7 +69,7 @@
                 <p class="text-xs font-weight-bold mb-0">{{ $kas->periode }}</p>
             </td>
             @foreach ($kasMasukOptions as $key => $label)
-            <td class="text-center">
+            <td class="text-end">
                 @php
                 // Find the corresponding buku record
                 $buku = $bukuMasuk->where('id_main_cash_trans', $kas->id)->first();
@@ -100,7 +100,7 @@
             'sipanan_khusus' => 'total_sipanan_khusus',
             'penjualan_tunai' => 'total_penjualan_tunai',
             'jasa_sp' => 'total_jasa_sp',
-            'provinsi' => 'total_provinsi',
+            'provisi' => 'total_provisi',
             'shu_puskop' => 'total_shu_puskop',
             'inv_usipa' => 'total_inv_usipa',
             'lain_lain' => 'total_lain_lain',
@@ -109,7 +109,7 @@
 
             <!-- Total untuk masing-masing kolom kas keluar -->
             @foreach ($kasMasukOptions as $key => $label)
-            <td class="text-center text-xs font-weight-bold debet-transaction">
+            <td class="text-end text-xs font-weight-bold debet-transaction">
                 @php
                 $totalColumn = $columnMapping[$key];
                 @endphp

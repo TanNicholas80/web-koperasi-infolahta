@@ -99,7 +99,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         SUM(buku_besar_usipa_cash_ins.simp_khusus) as total_simp_khusus,
         SUM(buku_besar_usipa_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_usipa_cash_ins.jasa_sp) as total_jasa_sp,
-        SUM(buku_besar_usipa_cash_ins.provinsi) as total_provinsi,
+        SUM(buku_besar_usipa_cash_ins.provisi) as total_provisi,
         SUM(buku_besar_usipa_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_usipa_cash_ins.modal_disetor) as total_modal_disetor
     '))
@@ -115,7 +115,12 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
             ->whereMonth('trans_date_usipa', $this->month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date_usipa', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('bukuMasukUsipa.table_buku_masuk_usipa', [
             'kasUsipa' => $kasUsipa,

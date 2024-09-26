@@ -28,7 +28,7 @@ return new class extends Migration
             $table->float('simp_khusus')->default(0);
             $table->float('penjualan_tunai')->default(0);
             $table->float('jasa_sp')->default(0);
-            $table->float('provinsi')->default(0);
+            $table->float('provisi')->default(0);
             $table->float('shu_puskop')->default(0);
             $table->float('modal_disetor')->default(0);
             $table->timestamps();

@@ -190,6 +190,8 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
         foreach (range('A', 'W') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
+        // Alignment rata kanan
+        $sheet->getStyle($column . '2:' . $column . '1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
     }
 
     public function columnWidths(): array
@@ -239,7 +241,7 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
             SUM(buku_besar_cash_ins.sipanan_khusus) as total_sipanan_khusus,
             SUM(buku_besar_cash_ins.penjualan_tunai) as total_penjualan_tunai,
             SUM(buku_besar_cash_ins.jasa_sp) as total_jasa_sp,
-            SUM(buku_besar_cash_ins.provinsi) as total_provinsi,
+            SUM(buku_besar_cash_ins.provisi) as total_provisi,
             SUM(buku_besar_cash_ins.shu_puskop) as total_shu_puskop,
             SUM(buku_besar_cash_ins.inv_usipa) as total_inv_usipa,
             SUM(buku_besar_cash_ins.lain_lain) as total_lain_lain
@@ -256,7 +258,12 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
             ->whereMonth('trans_date', $this->month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('bukuMasuk.table_buku_masuk', [
             'kasInduk' => $kasInduk,
@@ -293,4 +300,3 @@ class BukuKasMasukPerMonthSheet implements FromView, WithTitle, WithColumnWidths
         return "{$monthName}";
     }
 }
-?>

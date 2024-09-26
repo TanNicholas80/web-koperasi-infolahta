@@ -19,7 +19,7 @@ class KasUsipaController extends Controller
      */
     public function index()
     {
-        $kasUsipa = KasUsipa::with('transactions')->get();
+        $kasUsipa = KasUsipa::with('transactions')->orderBy('created_at', 'desc')->get();
 
         return view('kasUsipa.index', compact('kasUsipa'));
     }
@@ -206,10 +206,10 @@ class KasUsipaController extends Controller
                             $shouldSave = true;
                             break;
 
-                        case 'provinsi':
+                        case 'provisi':
                             // Logika khusus untuk kategori PROVISI
                             $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
-                            $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
+                            $bukuBesarCashIn->provisi = $transactionData['debet_transaction_usipa'];
                             $shouldSave = true;
                             break;
 
@@ -665,8 +665,8 @@ class KasUsipaController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provinsi':
-                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
+                            case 'provisi':
+                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction_usipa'];
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
                                 $shouldSave = true;
                                 break;
@@ -710,7 +710,7 @@ class KasUsipaController extends Controller
                     $bukuBesarCashIn->simp_khusus = 0;
                     $bukuBesarCashIn->penjualan_tunai = 0;
                     $bukuBesarCashIn->jasa_sp = 0;
-                    $bukuBesarCashIn->provinsi = 0;
+                    $bukuBesarCashIn->provisi = 0;
                     $bukuBesarCashIn->shu_puskop = 0;
                     $bukuBesarCashIn->modal_disetor = 0;
 
@@ -799,8 +799,8 @@ class KasUsipaController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provinsi':
-                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction_usipa'];
+                            case 'provisi':
+                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction_usipa'];
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction_usipa'];
                                 $shouldSave = true;
                                 break;

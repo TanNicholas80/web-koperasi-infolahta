@@ -33,7 +33,7 @@ class BukuBesarKasMasukController extends Controller
         SUM(buku_besar_cash_ins.sipanan_khusus) as total_sipanan_khusus,
         SUM(buku_besar_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_cash_ins.jasa_sp) as total_jasa_sp,
-        SUM(buku_besar_cash_ins.provinsi) as total_provinsi,
+        SUM(buku_besar_cash_ins.provisi) as total_provisi,
         SUM(buku_besar_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_cash_ins.inv_usipa) as total_inv_usipa,
         SUM(buku_besar_cash_ins.lain_lain) as total_lain_lain
@@ -50,7 +50,13 @@ class BukuBesarKasMasukController extends Controller
             ->whereMonth('trans_date', $month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date', 'asc')
-            ->get();
+            ->get()
+
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('bukuMasuk.index', compact('kasInduk', 'bukuMasuk', 'totals', 'year', 'month'));
     }
