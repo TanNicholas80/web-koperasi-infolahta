@@ -17,10 +17,28 @@ class KasUsipaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $kasUsipa = KasUsipa::with('transactions')->orderBy('created_at', 'desc')->get();
 
+    // public function index()
+    // {
+    //     $kasUsipa = KasUsipa::with('transactions')->orderBy('created_at', 'desc')->get();
+
+    //     return view('kasUsipa.index', compact('kasUsipa'));
+    // }
+
+    public function index(Request $req)
+    {
+        // Ambil tahun dan bulan dari input request, default ke tahun dan bulan saat ini
+        $year = $req->input('year', Carbon::now()->year);
+        $month = $req->input('month', Carbon::now()->month);
+
+        // Mengambil data kas masuk beserta relasi transactions dan userCashIn
+        $kasUsipa = KasUsipa::with('transactions')
+            ->whereYear('date_usipa', $year) // Filter berdasarkan tahun
+            ->whereMonth('date_usipa', $month) // Filter berdasarkan bulan
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
+            ->get();
+
+        // Kirim data ke view
         return view('kasUsipa.index', compact('kasUsipa'));
     }
 
