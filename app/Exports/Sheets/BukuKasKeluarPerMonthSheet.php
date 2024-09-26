@@ -186,7 +186,7 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
     public function styles(Worksheet $sheet)
     {
         // Mengatur wrap text pada kolom tertentu
-        $sheet->getStyle('A2:Z1000')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A2:Z1000')->getAlignment()->setWrapText(false);
 
         // Mengatur tinggi baris secara otomatis sesuai isi
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
@@ -209,20 +209,54 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
         // Mendapatkan baris dan kolom terakhir yang terisi data
         $highestRow = $sheet->getHighestRow(); // Baris terakhir yang berisi data
 
-        // Mengatur auto-size agar kolom menjadi rapat dengan teks
-        foreach (range('A', 'AH') as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
-        }
+        $sheet->getStyle('F2:AH1000')->getNumberFormat()->setFormatCode('"Rp"#,##0.00_-');
 
-        // Format kolom F hingga AH sebagai currency Rupiah
-        $rupiahFormat = 'Rp #,##0.00'; // Format mata uang Rupiah
-        $sheet->getStyle("F2:AH{$highestRow}")->getNumberFormat()->setFormatCode($rupiahFormat);
+        // Mengatur kolom A hingga E agar lebarnya rapat dengan teks
+        foreach (range('A', 'AH') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
     }
 
     public function columnWidths(): array
     {
         // Tidak perlu mengatur ukuran kolom secara manual, menggunakan auto-size di styles()
-        return [];
+        return [
+            'A' => 15,  // Date
+            'B' => 15,  // Date
+            'C' => 30,  // Keterangan
+            'D' => 15,  // Status
+            'E' => 15,  // Periode
+            'F' => 20,
+            'G' => 20,
+            'H' => 20,
+            'I' => 20,
+            'J' => 20,
+            'K' => 20,
+            'L' => 25,
+            'M' => 25,
+            'N' => 25,
+            'O' => 25,
+            'P' => 25,
+            'Q' => 25,
+            'R' => 25,
+            'S' => 20,
+            'T' => 20,
+            'U' => 20,
+            'V' => 20,
+            'W' => 20,
+            'X' => 20,
+            'Y' => 20,
+            'Z' => 20,
+            'AA' => 20,
+            'AB' => 20,
+            'AC' => 20,
+            'AD' => 20,
+            'AE' => 20,
+            'AF' => 20,
+            'AG' => 20,
+            'AH' => 20,
+            'AI' => 20,
+        ];
     }
 
     public function view(): View
@@ -232,7 +266,7 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
             SUM(buku_besar_cash_outs.kas) as total_kas,
             SUM(buku_besar_cash_outs.bank_sp) as total_bank_sp,
             SUM(buku_besar_cash_outs.bank_induk) as total_bank_induk,
-            SUM(buku_besar_cash_outs.simpan_pinjam) as total_simpan_pinjam,
+            SUM(buku_besar_cash_outs.piutang_uang) as total_piutang_uang,
             SUM(buku_besar_cash_outs.inventaris) as total_inventaris,
             SUM(buku_besar_cash_outs.penyertaan_puskop) as total_penyertaan_puskop,
             SUM(buku_besar_cash_outs.hutang_toko) as total_hutang_toko,
