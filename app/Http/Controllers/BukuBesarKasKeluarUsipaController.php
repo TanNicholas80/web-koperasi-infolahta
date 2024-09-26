@@ -1,4 +1,4 @@
-<?php
+g<?php
 
 namespace App\Http\Controllers;
 

@@ -232,7 +232,7 @@ class BukuKasKeluarPerMonthSheet implements FromView, WithTitle, WithColumnWidth
             SUM(buku_besar_cash_outs.kas) as total_kas,
             SUM(buku_besar_cash_outs.bank_sp) as total_bank_sp,
             SUM(buku_besar_cash_outs.bank_induk) as total_bank_induk,
-            SUM(buku_besar_cash_outs.simpan_pinjam) as total_simpan_pinjam,
+            SUM(buku_besar_cash_outs.piutang_uang) as total_piutang_uang,
             SUM(buku_besar_cash_outs.inventaris) as total_inventaris,
             SUM(buku_besar_cash_outs.penyertaan_puskop) as total_penyertaan_puskop,
             SUM(buku_besar_cash_outs.hutang_toko) as total_hutang_toko,

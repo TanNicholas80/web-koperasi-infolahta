@@ -20,6 +20,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\DataBarangController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +100,16 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
 	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 });
+
+
+
+
+Route::resource('data_barang', DataBarangController::class);
+
+
+Route::resource('transaksi', TransaksiController::class);
+
+
 
 Route::get('/login', function () {
 	return view('session/login-session');
