@@ -19,10 +19,28 @@ class KasInduksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    // public function index()
+    // {
+    //     // Mengambil semua data kas masuk beserta relasi transaction dan userCashIn
+    //     $kasInduk = main_cashs::with('transactions')->orderBy('created_at', 'desc')->get();
+
+    //     // Kirim data ke view
+    //     return view('kasInduk.index', compact('kasInduk'));
+    // }
+
+    public function index(Request $req)
     {
-        // Mengambil semua data kas masuk beserta relasi transaction dan userCashIn
-        $kasInduk = main_cashs::with('transactions')->orderBy('created_at', 'desc')->get();
+        // Ambil tahun dan bulan dari input request, default ke tahun dan bulan saat ini
+        $year = $req->input('year', Carbon::now()->year);
+        $month = $req->input('month', Carbon::now()->month);
+
+        // Mengambil data kas masuk beserta relasi transactions dan userCashIn
+        $kasInduk = main_cashs::with('transactions')
+            ->whereYear('date', $year) // Filter berdasarkan tahun
+            ->whereMonth('date', $month) // Filter berdasarkan bulan
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
+            ->get();
 
         // Kirim data ke view
         return view('kasInduk.index', compact('kasInduk'));

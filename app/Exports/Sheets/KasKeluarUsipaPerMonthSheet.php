@@ -162,18 +162,18 @@ class KasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidt
         $highestColumn = $sheet->getHighestColumn(); // Mendapatkan kolom terakhir yang berisi data
 
         // Menambahkan border hanya pada kolom dan baris yang terisi data
-        // $sheet->getStyle("A1:{$highestColumn}{$highestRow}")->applyFromArray([
-        //     'borders' => [
-        //         'allBorders' => [
-        //             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-        //             'color' => ['argb' => '000000'],
-        //         ],
-        //     ],
-        // ]);
+        $sheet->getStyle("A1:{$highestColumn}{$highestRow}")->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ]);
 
         // Format kolom D, E, F sebagai currency Rupiah
         $rupiahFormat = 'Rp #,##0.00'; // Format mata uang Rupiah
-        $sheet->getStyle("F2:F{$highestRow}")->getNumberFormat()->setFormatCode($rupiahFormat);
+        $sheet->getStyle("F2:F100{$highestRow}")->getNumberFormat()->setFormatCode($rupiahFormat);
     }
 
     public function columnWidths(): array

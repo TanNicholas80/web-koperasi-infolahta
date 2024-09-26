@@ -183,7 +183,7 @@ class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumn
     public function styles(Worksheet $sheet)
     {
         // Mengatur wrap text pada kolom tertentu
-        $sheet->getStyle('A2:AI1000')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A2:AI1000')->getAlignment()->setWrapText(false);
 
         // Mengatur tinggi baris secara otomatis sesuai isi
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
@@ -215,6 +215,8 @@ class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumn
     {
         // Mengatur lebar kolom F hingga AI agar sesuai dengan format mata uang
         return [
+            'B' => 20,
+            'C' => 32,
             'F' => 20,
             'G' => 20,
             'H' => 20,
