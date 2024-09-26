@@ -200,9 +200,9 @@ class KasInduksController extends Controller
                             $shouldSave = true;
                             break;
 
-                        case 'provinsi':
+                        case 'provisi':
                             $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                            $bukuBesarCashIn->provinsi = $transactionData['debet_transaction'];
+                            $bukuBesarCashIn->provisi = $transactionData['debet_transaction'];
                             $shouldSave = true;
                             break;
 
@@ -666,9 +666,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provinsi':
+                            case 'provisi':
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction'];
+                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction'];
                                 $shouldSave = true;
                                 break;
 
@@ -717,7 +717,7 @@ class KasInduksController extends Controller
                     $bukuBesarCashIn->sipanan_khusus = 0;
                     $bukuBesarCashIn->penjualan_tunai = 0;
                     $bukuBesarCashIn->jasa_sp = 0;
-                    $bukuBesarCashIn->provinsi = 0;
+                    $bukuBesarCashIn->provisi = 0;
                     $bukuBesarCashIn->shu_puskop = 0;
                     $bukuBesarCashIn->inv_usipa = 0;
                     $bukuBesarCashIn->lain_lain = 0;
@@ -807,9 +807,9 @@ class KasInduksController extends Controller
                                 $shouldSave = true;
                                 break;
 
-                            case 'provinsi':
+                            case 'provisi':
                                 $bukuBesarCashIn->kas = $transactionData['debet_transaction'];
-                                $bukuBesarCashIn->provinsi = $transactionData['debet_transaction'];
+                                $bukuBesarCashIn->provisi = $transactionData['debet_transaction'];
                                 $shouldSave = true;
                                 break;
 

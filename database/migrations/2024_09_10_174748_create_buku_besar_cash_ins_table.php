@@ -28,7 +28,7 @@ return new class extends Migration
             $table->float('sipanan_khusus')->nullable()->default(0);
             $table->float('penjualan_tunai')->nullable()->default(0);
             $table->float('jasa_sp')->nullable()->default(0);
-            $table->float('provinsi')->nullable()->default(0);
+            $table->float('provisi')->nullable()->default(0);
             $table->float('shu_puskop')->nullable()->default(0);
             $table->float('inv_usipa')->nullable()->default(0);
             $table->float('lain_lain')->nullable()->default(0);

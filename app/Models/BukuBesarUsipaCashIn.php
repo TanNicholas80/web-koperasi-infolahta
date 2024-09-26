@@ -25,7 +25,7 @@ class BukuBesarUsipaCashIn extends Model
         'simp_khusus',
         'penjualan_tunai',
         'jasa_sp',
-        'provinsi',
+        'provisi',
         'shu_puskop',
         'modal_disetor'
     ];

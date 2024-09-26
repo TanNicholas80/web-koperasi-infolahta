@@ -99,7 +99,7 @@ class BukuKasMasukUsipaPerMonthSheet implements FromView, WithTitle, WithColumnW
         SUM(buku_besar_usipa_cash_ins.simp_khusus) as total_simp_khusus,
         SUM(buku_besar_usipa_cash_ins.penjualan_tunai) as total_penjualan_tunai,
         SUM(buku_besar_usipa_cash_ins.jasa_sp) as total_jasa_sp,
-        SUM(buku_besar_usipa_cash_ins.provinsi) as total_provinsi,
+        SUM(buku_besar_usipa_cash_ins.provisi) as total_provisi,
         SUM(buku_besar_usipa_cash_ins.shu_puskop) as total_shu_puskop,
         SUM(buku_besar_usipa_cash_ins.modal_disetor) as total_modal_disetor
     '))

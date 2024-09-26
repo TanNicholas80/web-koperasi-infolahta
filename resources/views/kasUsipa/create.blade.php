@@ -56,7 +56,7 @@
                             'simp_khusus' => 'SIMPANAN KHUSUS',
                             'penjualan_tunai' => 'PENJUALAN TUNAI',
                             'jasa_sp' => 'JASA S/P',
-                            'provinsi' => 'PROVINSI',
+                            'provisi' => 'PROVISI',
                             'shu_puskop' => 'SHU PUSKOP',
                             'modal_disetor' => 'MODAL DISETOR',
                             ];

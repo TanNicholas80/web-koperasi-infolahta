@@ -32,7 +32,7 @@
             'simp_khusus' => 'SIMPANAN KHUSUS',
             'penjualan_tunai' => 'PENJUALAN TUNAI',
             'jasa_sp' => 'JASA S/P',
-            'provinsi' => 'PROVINSI',
+            'provisi' => 'PROVISI',
             'shu_puskop' => 'SHU PUSKOP',
             'modal_disetor' => 'MODAL DISETOR',
             ];
@@ -99,7 +99,7 @@
             'simp_khusus' => 'total_simp_khusus',
             'penjualan_tunai' => 'total_penjualan_tunai',
             'jasa_sp' => 'total_jasa_sp',
-            'provinsi' => 'total_provinsi',
+            'provisi' => 'total_provisi',
             'shu_puskop' => 'total_shu_puskop',
             'modal_disetor' => 'total_modal_disetor',
             ];
