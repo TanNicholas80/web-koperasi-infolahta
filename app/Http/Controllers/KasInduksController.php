@@ -22,7 +22,7 @@ class KasInduksController extends Controller
     public function index()
     {
         // Mengambil semua data kas masuk beserta relasi transaction dan userCashIn
-        $kasInduk = main_cashs::with('transactions')->get();
+        $kasInduk = main_cashs::with('transactions')->orderBy('created_at', 'desc')->get();
 
         // Kirim data ke view
         return view('kasInduk.index', compact('kasInduk'));

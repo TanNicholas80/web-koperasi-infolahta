@@ -50,7 +50,13 @@ class BukuBesarKasMasukController extends Controller
             ->whereMonth('trans_date', $month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date', 'asc')
-            ->get();
+            ->get()
+
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('bukuMasuk.index', compact('kasInduk', 'bukuMasuk', 'totals', 'year', 'month'));
     }

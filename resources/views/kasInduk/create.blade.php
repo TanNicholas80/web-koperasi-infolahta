@@ -96,7 +96,7 @@
                             'simp_pokok' => 'Simpanan Pokok',
                             'simp_wajib' => 'Simpanan Wajib',
                             'simp_khusus' => 'Simpanan Khusus',
-                            'shu_angg' => 'SHU Anggaran',
+                            'shu_angg' => 'SHU Anggota',
                             'pembelian_toko' => 'Pembelian Toko',
                             'biaya_insentif' => 'Biaya Insentif',
                             'biaya_atk' => 'Biaya ATK',

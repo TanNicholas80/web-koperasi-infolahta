@@ -19,7 +19,7 @@ class KasUsipaController extends Controller
      */
     public function index()
     {
-        $kasUsipa = KasUsipa::with('transactions')->get();
+        $kasUsipa = KasUsipa::with('transactions')->orderBy('created_at', 'desc')->get();
 
         return view('kasUsipa.index', compact('kasUsipa'));
     }

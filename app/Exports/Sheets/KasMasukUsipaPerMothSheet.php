@@ -84,7 +84,12 @@ class KasMasukUsipaPerMothSheet implements FromView, WithTitle, WithColumnWidths
             ->whereMonth('trans_date_usipa', $this->month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date_usipa', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('kasMasukUsipa.table_kas_masuk_usipa', [
             'kasUsipa' => $kasUsipa,

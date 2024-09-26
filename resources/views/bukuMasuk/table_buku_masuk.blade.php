@@ -69,7 +69,7 @@
                 <p class="text-xs font-weight-bold mb-0">{{ $kas->periode }}</p>
             </td>
             @foreach ($kasMasukOptions as $key => $label)
-            <td class="text-center">
+            <td class="text-end">
                 @php
                 // Find the corresponding buku record
                 $buku = $bukuMasuk->where('id_main_cash_trans', $kas->id)->first();
@@ -109,7 +109,7 @@
 
             <!-- Total untuk masing-masing kolom kas keluar -->
             @foreach ($kasMasukOptions as $key => $label)
-            <td class="text-center text-xs font-weight-bold debet-transaction">
+            <td class="text-end text-xs font-weight-bold debet-transaction">
                 @php
                 $totalColumn = $columnMapping[$key];
                 @endphp

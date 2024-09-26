@@ -54,14 +54,34 @@
   @yield('guest')
   @endguest
 
-  @if(session()->has('success'))
+  <!-- @if(session()->has('success'))
   <div x-data="{ show: true}"
     x-init="setTimeout(() => show = false, 4000)"
     x-show="show"
-    class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
+    class="position-absolute top-0 start-50 translate-middle-x bg-success rounded right-3 text-sm py-2 px-4 mb-20">
     <p class="m-0">{{ session('success')}}</p>
   </div>
+  @endif -->
+
+  @if(session()->has('success'))
+  <div id="success-notification" class="position-absolute top-0 start-50 translate-middle-x bg-success rounded right-3 text-sm py-2 px-4 mb-20" style="display: none;">
+    <p class="m-0">{{ session('success') }}</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menampilkan notifikasi
+      const notification = document.getElementById('success-notification');
+      notification.style.display = 'block'; // Tampilkan notifikasi
+
+      // Menghilangkan notifikasi setelah 4 detik
+      setTimeout(() => {
+        notification.style.display = 'none'; // Sembunyikan notifikasi
+      }, 3000); // Ganti 4000 dengan jumlah milidetik yang diinginkan
+    });
+  </script>
   @endif
+
   <!--   Core JS Files   -->
   <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
   <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
