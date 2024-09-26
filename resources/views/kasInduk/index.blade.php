@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-
+        <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 mx-4">
@@ -137,6 +137,7 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/sidebar.js') }}"></script>
         <script>
             function formatRupiah(angka, prefix) {
                 var numberString = angka.replace(/[^,\d]/g, '').toString(),

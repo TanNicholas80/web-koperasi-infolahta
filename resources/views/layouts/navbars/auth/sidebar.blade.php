@@ -1,3 +1,36 @@
+{{-- <!-- Navbar with dropdown button for mobile -->
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarDropdown">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Menu
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="{{ url('user-profile') }}">Profil Pengguna</a></li>
+            <li><a class="dropdown-item" href="{{ route('kasInduk.index') }}">Kas Induk</a></li>
+            <li><a class="dropdown-item" href="{{ route('kas-masuk') }}">Kas Masuk</a></li>
+            <li><a class="dropdown-item" href="{{ route('kas-keluar') }}">Kas Keluar</a></li>
+            <li><a class="dropdown-item" href="{{ route('buku-masuk') }}">Buku Besar Kas Masuk</a></li>
+            <li><a class="dropdown-item" href="{{ route('buku-keluar') }}">Buku Besar Kas Keluar</a></li>
+            <li><a class="dropdown-item" href="{{ route('kasUsipa.index') }}">Kas Usipa</a></li>
+            <li><a class="dropdown-item" href="{{ route('kas-masuk-usipa') }}">Kas Masuk Usipa</a></li>
+            <li><a class="dropdown-item" href="{{ route('kas-keluar-usipa') }}">Kas Keluar Usipa</a></li>
+            <li><a class="dropdown-item" href="{{ route('buku-masuk-usipa') }}">Buku Besar Usipa Masuk</a></li>
+            <li><a class="dropdown-item" href="{{ route('buku-keluar-usipa') }}">Buku Besar Usipa Keluar</a></li>
+            <li><a class="dropdown-item" href="{{ route('kas-keluar') }}">Persediaan Barang</a></li>
+            <!-- Tambahkan menu lainnya di sini -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> --}}
+
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
