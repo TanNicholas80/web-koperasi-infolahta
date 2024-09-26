@@ -169,7 +169,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 //         return "{$monthName}";
 //     }
 // }
-class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidths, WithStyles {
+class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidths, WithStyles
+{
     protected $year;
     protected $month;
 
@@ -295,7 +296,12 @@ class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumn
             ->whereMonth('trans_date_usipa', $this->month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date_usipa', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('bukuKeluarUsipa.table_buku_keluar_usipa', [
             'kasUsipa' => $kasUsipa,
@@ -332,4 +338,3 @@ class BukuKasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumn
         return "{$monthName}";
     }
 }
-?>

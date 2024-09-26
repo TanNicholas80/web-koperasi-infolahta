@@ -196,7 +196,12 @@ class KasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidt
             ->whereMonth('trans_date_usipa', $this->month)
             ->whereIn('id', $ids)
             ->orderBy('trans_date_usipa', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Memformat trans_date menjadi hanya tanggal (hari)
+                $item->trans_date = \Carbon\Carbon::parse($item->trans_date)->format('d');
+                return $item;
+            });
 
         return view('kasKeluarUsipa.table_kas_keluar_usipa', [
             'kasUsipa' => $kasUsipa,
@@ -207,9 +212,18 @@ class KasKeluarUsipaPerMonthSheet implements FromView, WithTitle, WithColumnWidt
     public function title(): string
     {
         $months = [
-            1 => 'JAN', 2 => 'FEB', 3 => 'MAR', 4 => 'APR', 5 => 'MEI',
-            6 => 'JUN', 7 => 'JUL', 8 => 'AGU', 9 => 'SEP', 10 => 'OKT',
-            11 => 'NOV', 12 => 'DES'
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MEI',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AGU',
+            9 => 'SEP',
+            10 => 'OKT',
+            11 => 'NOV',
+            12 => 'DES'
         ];
 
         $monthName = $months[$this->month];
