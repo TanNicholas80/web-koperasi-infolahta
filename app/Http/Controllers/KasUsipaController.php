@@ -8,7 +8,7 @@ use App\Models\CashInUsipa;
 use App\Models\CashOutUsipa;
 use App\Models\KasUsipa;
 use App\Models\KasUsipaTrans;
-use App\Models\Saldo;
+use App\Models\SaldoUsipa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,6 +31,22 @@ class KasUsipaController extends Controller
         $year = $req->input('year', Carbon::now()->year);
         $month = $req->input('month', Carbon::now()->month);
 
+        // Menghitung bulan dan tahun sebelumnya
+        $previousMonth = $month == 1 ? 12 : $month - 1;
+        $previousYear = $month == 1 ? $year - 1 : $year;
+
+        // Query untuk mendapatkan saldo akhir bulan sebelumnya
+        $saldoAkhirBulanSebelumnya = KasUsipa::whereYear('date_usipa', $previousYear)
+            ->whereMonth('date_usipa', $previousMonth)
+            ->orderBy('date_usipa', 'desc') // Mengurutkan untuk mendapatkan yang terbaru
+            ->value('saldo_usipa'); // Mengambil field saldo dari transaksi terakhir
+
+        // Jika tidak ada saldo akhir bulan sebelumnya, ambil dari saldo awal yang tersimpan
+        if (is_null($saldoAkhirBulanSebelumnya)) {
+            $saldo_awal = SaldoUsipa::latest('created_at')->first(); // Ambil saldo terbaru dari tabel Saldo
+            $saldoAkhirBulanSebelumnya = $saldo_awal ? $saldo_awal->saldo_awal_usipa : 0; // Jika saldo awal tidak ada, default ke 0
+        }
+
         // Mengambil data kas masuk beserta relasi transactions dan userCashIn
         $kasUsipa = KasUsipa::with('transactions')
             ->whereYear('date_usipa', $year) // Filter berdasarkan tahun
@@ -39,7 +55,7 @@ class KasUsipaController extends Controller
             ->get();
 
         // Kirim data ke view
-        return view('kasUsipa.index', compact('kasUsipa'));
+        return view('kasUsipa.index', compact('kasUsipa', 'saldoAkhirBulanSebelumnya'));
     }
 
     /**
@@ -63,7 +79,7 @@ class KasUsipaController extends Controller
         // Ambil saldo terakhir dari database
         $lastCash = KasUsipa::latest('created_at')->first();
         $lastSaldo = $lastCash ? $lastCash->saldo_usipa : 0;
-        $saldo_awal = Saldo::latest('created_at')->first();
+        $saldo_awal = SaldoUsipa::latest('created_at')->first();
 
         $kasUsipa = new KasUsipa();
         $kasUsipa->date_usipa = $date->format('Y-m-d');
@@ -74,8 +90,8 @@ class KasUsipaController extends Controller
             $kasUsipa->saldo_before_usipa_trans = $lastSaldo;
         } else {
             // Jika tidak ada saldo sebelumnya, gunakan saldo_awal yang diinput user
-            $kasUsipa->saldo_usipa = $saldo_awal->saldo_awal;
-            $kasUsipa->saldo_before_usipa_trans = $saldo_awal->saldo_awal;
+            $kasUsipa->saldo_usipa = $saldo_awal->saldo_awal_usipa;
+            $kasUsipa->saldo_before_usipa_trans = $saldo_awal->saldo_awal_usipa;
         }
         $kasUsipa->save();
 

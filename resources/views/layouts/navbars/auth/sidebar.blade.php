@@ -34,7 +34,7 @@
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-    <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('user-management') }}">
+    <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ url('user-profile') }}">
       <img src="{{ asset('assets/img/logo-koperasi.png') }}" class="navbar-brand-img h-100" alt="...">
       <span class="ms-3 font-weight-bold">Primkopkar S-20 Anindyaguna</span>
     </a>
@@ -64,7 +64,7 @@
         </a>
       </li>
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas Induk</h6>
+        <h6 class="ps-4 ms-2 text-uppercase text-start text-xs font-weight-bolder opacity-6">Manajemen Kas Induk</h6>
       </li>
       <li class="nav-item pb-2">
         <a class="nav-link {{ Request::is('kasInduk*') ? 'active' : '' }}" href="{{ route('kasInduk.index') }}">
@@ -107,7 +107,7 @@
         </a>
       </li>
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas Usipa</h6>
+        <h6 class="ps-4 ms-2 text-start text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Kas Usipa</h6>
       </li>
       <li class="nav-item pb-2">
         <a class="nav-link {{ Request::is('kasUsipa*') ? 'active' : '' }}" href="{{ route('kasUsipa.index') }}">
@@ -150,7 +150,7 @@
         </a>
       </li>
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Barang</h6>
+        <h6 class="ps-4 ms-2 text-start text-uppercase text-xs font-weight-bolder opacity-6">Manajemen Barang</h6>
       </li>
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('data_barang') ? 'active' : '') }}" href="{{ url('data_barang') }}">

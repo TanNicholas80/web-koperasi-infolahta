@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\main_cashs;
 use App\Models\Saldo;
+use App\Models\SaldoUsipa;
 use Illuminate\Http\Request;
 
 class SaldoController extends Controller
@@ -22,9 +22,9 @@ class SaldoController extends Controller
 
     public function create_usipa(Request $request)
     {
-        $saldo = new Saldo();
+        $saldo = new SaldoUsipa();
 
-        $saldo->saldo_awal = $request->saldo_awal;
+        $saldo->saldo_awal_usipa = $request->saldo_awal_usipa;
         $saldo->save();
 
         // $kasInduk = main_cashs::with('transactions')->get();
