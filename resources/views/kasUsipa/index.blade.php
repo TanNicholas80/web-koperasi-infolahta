@@ -16,7 +16,7 @@
                                 <form action="{{ route('saldo-usipa.create') }}" method="POST"
                                     class="d-flex align-items-center">
                                     @csrf <!-- Pastikan token CSRF ada untuk keamanan -->
-                                    <input type="text" name="saldo_awal" placeholder="Masukan Saldo Awal" required
+                                    <input type="text" name="saldo_awal_usipa" placeholder="Masukan Saldo Awal" required
                                         class="form-control me-2 rupiah">
                                     <button type="submit" class="btn bg-gradient-primary btn-sm mb-0">Saldo</button>
                                 </form>
@@ -69,6 +69,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-xs font-weight-bold">Saldo Awal Bulan</td>
+                                        <td colspan="4" class="text-center text-xs font-weight-bold debet-transaction">{{ $saldoAkhirBulanSebelumnya}}</td> <!-- Menampilkan saldo dengan format angka -->
+                                    </tr>
                                     @foreach ($kasUsipa as $kas)
                                     @foreach ($kas->transactions as $transaksi)
                                     <tr>

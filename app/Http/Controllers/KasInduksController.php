@@ -35,6 +35,22 @@ class KasInduksController extends Controller
         $year = $req->input('year', Carbon::now()->year);
         $month = $req->input('month', Carbon::now()->month);
 
+        // Menghitung bulan dan tahun sebelumnya
+        $previousMonth = $month == 1 ? 12 : $month - 1;
+        $previousYear = $month == 1 ? $year - 1 : $year;
+
+        // Query untuk mendapatkan saldo akhir bulan sebelumnya
+        $saldoAkhirBulanSebelumnya = main_cashs::whereYear('date', $previousYear)
+            ->whereMonth('date', $previousMonth)
+            ->orderBy('date', 'desc') // Mengurutkan untuk mendapatkan yang terbaru
+            ->value('saldo'); // Mengambil field saldo dari transaksi terakhir
+
+        // Jika tidak ada saldo akhir bulan sebelumnya, ambil dari saldo awal yang tersimpan
+        if (is_null($saldoAkhirBulanSebelumnya)) {
+            $saldo_awal = Saldo::latest('created_at')->first(); // Ambil saldo terbaru dari tabel Saldo
+            $saldoAkhirBulanSebelumnya = $saldo_awal ? $saldo_awal->saldo_awal : 0; // Jika saldo awal tidak ada, default ke 0
+        }
+
         // Mengambil data kas masuk beserta relasi transactions dan userCashIn
         $kasInduk = main_cashs::with('transactions')
             ->whereYear('date', $year) // Filter berdasarkan tahun
@@ -43,7 +59,7 @@ class KasInduksController extends Controller
             ->get();
 
         // Kirim data ke view
-        return view('kasInduk.index', compact('kasInduk'));
+        return view('kasInduk.index', compact('kasInduk', 'saldoAkhirBulanSebelumnya'));
     }
 
     /**
