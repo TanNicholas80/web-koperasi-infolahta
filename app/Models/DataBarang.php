@@ -10,7 +10,6 @@ class DataBarang extends Model
     use HasFactory;
 
     protected $table = 'data_barangs'; // Nama tabel di database, sesuaikan jika berbeda
-    protected $primaryKey = 'id';  // Primary key
 
     // Kolom-kolom yang dapat diisi secara massal
     protected $fillable = [

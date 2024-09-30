@@ -13,6 +13,7 @@
                         </div>
                         <div>
                             <div class="d-flex">
+                                @if(!$saldo)
                                 <form action="{{ route('saldo-usipa.create') }}" method="POST"
                                     class="d-flex align-items-center">
                                     @csrf <!-- Pastikan token CSRF ada untuk keamanan -->
@@ -20,6 +21,7 @@
                                         class="form-control me-2 rupiah">
                                     <button type="submit" class="btn bg-gradient-primary btn-sm mb-0">Saldo</button>
                                 </form>
+                                @endif
                                 <a href="{{ route('kasUsipa.create') }}"
                                     class="btn bg-gradient-primary btn-sm mb-0 mx-3" type="button">+&nbsp; Kas
                                     Usipa</a>

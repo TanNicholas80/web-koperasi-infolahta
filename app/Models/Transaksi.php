@@ -9,15 +9,13 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'tanggal_transaksi' => 'datetime',
-    ];
     protected $fillable = [
         'data_barang_id',
         'jumlah',
         'total_harga',
         'nama_anggota',
-        'jenis_transaksi'
+        'jenis_transaksi',
+        'tanggal_transaksi'
     ];
 
     public function dataBarang()

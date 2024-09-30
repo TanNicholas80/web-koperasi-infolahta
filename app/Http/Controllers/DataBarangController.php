@@ -11,26 +11,26 @@ class DataBarangController extends Controller
     {
         $month = $request->input('month', date('m'));
         $year = $request->input('year', date('Y'));
-    
+
         // Mendapatkan bulan saat ini dan bulan sebelumnya
         $currentMonth = intval($month);
         $previousMonth = $currentMonth === 1 ? 12 : $currentMonth - 1;
-    
+
         // Mengambil data untuk bulan yang dipilih dan bulan sebelumnya
         $data_barang = DataBarang::where(function ($query) use ($currentMonth, $year, $previousMonth) {
             $query->whereMonth('tanggal', $currentMonth)
-                  ->whereYear('tanggal', $year)
-                  ->orWhere(function ($query) use ($previousMonth, $year) {
-                      $query->whereMonth('tanggal', $previousMonth)
-                            ->whereYear('tanggal', $year);
-                  });
+                ->whereYear('tanggal', $year)
+                ->orWhere(function ($query) use ($previousMonth, $year) {
+                    $query->whereMonth('tanggal', $previousMonth)
+                        ->whereYear('tanggal', $year);
+                });
         })->paginate(10);
-    
+
         // Menghitung total harga untuk data yang diambil
-        $total_harga = $data_barang->sum(function($barang) {
+        $total_harga = $data_barang->sum(function ($barang) {
             return $barang->stock * $barang->harga_satuan;
         });
-    
+
         return view('data_barang.index', compact('data_barang', 'total_harga', 'month', 'year'));
     }
 
@@ -40,21 +40,21 @@ class DataBarangController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'kode_brg' => 'required|unique:data_barangs,kode_brg',
-        'nama_brg' => 'required',
-        'stock' => 'required|integer',
-        'harga_satuan' => 'required|numeric',
-        'tanggal' => 'required|date', // Add validation for the tanggal input
-    ]);
+    {
+        $request->validate([
+            'kode_brg' => 'required|unique:data_barangs,kode_brg',
+            'nama_brg' => 'required',
+            'stock' => 'required|integer',
+            'harga_satuan' => 'required|numeric',
+            'tanggal' => 'required|date', // Add validation for the tanggal input
+        ]);
 
-    // Include the tanggal when creating the record
-    DataBarang::create($request->all());
+        // Include the tanggal when creating the record
+        DataBarang::create($request->all());
 
-    return redirect()->route('data_barang.index')
-                     ->with('success', 'Barang berhasil ditambahkan.');
-}
+        return redirect()->route('data_barang.index')
+            ->with('success', 'Barang berhasil ditambahkan.');
+    }
 
     public function edit($id)
     {
@@ -75,7 +75,7 @@ class DataBarangController extends Controller
         $barang->update($request->all());
 
         return redirect()->route('data_barang.index')
-                         ->with('success', 'Barang berhasil diupdate.');
+            ->with('success', 'Barang berhasil diupdate.');
     }
 
     public function destroy($id)
@@ -84,7 +84,6 @@ class DataBarangController extends Controller
         $barang->delete();
 
         return redirect()->route('data_barang.index')
-                         ->with('success', 'Barang berhasil dihapus.');
+            ->with('success', 'Barang berhasil dihapus.');
     }
 }
-

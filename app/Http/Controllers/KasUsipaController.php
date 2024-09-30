@@ -48,14 +48,18 @@ class KasUsipaController extends Controller
         }
 
         // Mengambil data kas masuk beserta relasi transactions dan userCashIn
-        $kasUsipa = KasUsipa::with('transactions')
+        $kasUsipa = KasUsipa::with(['transactions' => function ($query) {
+            $query->orderBy('periode_usipa', 'desc'); // Urutkan berdasarkan periode di transactions
+        }])
             ->whereYear('date_usipa', $year) // Filter berdasarkan tahun
             ->whereMonth('date_usipa', $month) // Filter berdasarkan bulan
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
+            ->orderBy('date_usipa', 'desc') // Urutkan berdasarkan created_at
             ->get();
 
+        $saldo = SaldoUsipa::first();
+
         // Kirim data ke view
-        return view('kasUsipa.index', compact('kasUsipa', 'saldoAkhirBulanSebelumnya'));
+        return view('kasUsipa.index', compact('kasUsipa', 'saldoAkhirBulanSebelumnya', 'saldo'));
     }
 
     /**

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('data_barang_id')->constrained('data_barangs')->onDelete('cascade');
             $table->integer('jumlah');  // Quantity of the item purchased
             $table->decimal('total_harga', 15, 2);  // Total price for this item
-            $table->date('tanggal_transaksi');  // Transaction timestamp
+            $table->date('tanggal_transaksi');
             $table->string('nama_anggota'); // Menambahkan kolom nama anggota
             $table->enum('jenis_transaksi', ['debit', 'kredit']); // Menambahkan kolom jenis transaksi
             $table->timestamps();

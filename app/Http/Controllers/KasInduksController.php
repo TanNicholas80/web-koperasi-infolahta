@@ -52,14 +52,18 @@ class KasInduksController extends Controller
         }
 
         // Mengambil data kas masuk beserta relasi transactions dan userCashIn
-        $kasInduk = main_cashs::with('transactions')
+        $kasInduk = main_cashs::with(['transactions' => function ($query) {
+            $query->orderBy('periode', 'desc'); // Urutkan berdasarkan periode di transactions
+        }])
             ->whereYear('date', $year) // Filter berdasarkan tahun
             ->whereMonth('date', $month) // Filter berdasarkan bulan
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
+            ->orderBy('date', 'desc') // Urutkan berdasarkan created_at
             ->get();
 
+        $saldo = Saldo::first();
+
         // Kirim data ke view
-        return view('kasInduk.index', compact('kasInduk', 'saldoAkhirBulanSebelumnya'));
+        return view('kasInduk.index', compact('kasInduk', 'saldoAkhirBulanSebelumnya', 'saldo'));
     }
 
     /**
