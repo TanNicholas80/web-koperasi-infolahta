@@ -70,8 +70,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="5" class="text-center text-sm font-weight-bold">Saldo Awal Bulan</td>
-                                        <td colspan="4" class="text-center text-sm font-weight- debet-transaction">{{ $saldoAkhirBulanSebelumnya}}</td> <!-- Menampilkan saldo dengan format angka -->
+                                        <td colspan="5" class="text-center text-xs font-weight-bold">Saldo Awal Bulan</td>
+                                        <td colspan="4" class="text-center text-xs font-weight-bold debet-transaction">{{ $saldoAkhirBulanSebelumnya}}</td> <!-- Menampilkan saldo dengan format angka -->
                                     </tr>
                                     @foreach ($kasInduk as $kas)
                                     @foreach ($kas->transactions as $transaksi)

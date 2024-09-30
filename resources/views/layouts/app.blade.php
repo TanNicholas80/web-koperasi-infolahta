@@ -64,7 +64,7 @@
   @endif -->
 
   @if(session()->has('success'))
-  <div id="success-notification" class="position-absolute top-0 start-50 translate-middle-x bg-success rounded right-3 text-sm py-2 px-4 mb-20" style="display: none;">
+  <div id="success-notification" class="position-absolute top-0 start-50 translate-middle-x bg-success rounded right-3 text-sm py-2 px-4 mb-20">
     <p class="m-0">{{ session('success') }}</p>
   </div>
 
