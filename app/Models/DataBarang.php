@@ -18,11 +18,12 @@ class DataBarang extends Model
         'nama_brg',
         'stock',
         'harga_satuan',
+        'tanggal'
     ];
 
     public function transaksis()
     {
-        return $this->hasMany(Transaksi::class);
+        return $this->hasMany(Transaksi::class,'data_barang_id');
     }
 }
 

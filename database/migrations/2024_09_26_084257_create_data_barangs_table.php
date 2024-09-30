@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('nama_brg');
             $table->integer('stock');
             $table->decimal('harga_satuan', 15, 2);
-            $table->timestamps();
+            $table->date('tanggal'); // Input date from user
+            $table->timestamps(); // Optional, remove if you don't need it
         });
     }
 

@@ -23,35 +23,36 @@
 
     <div class="container">
         <h1>Tambah Barang</h1>
-    
-        <!-- Form untuk input kas masuk -->
+        
         <form action="{{ route('data_barang.store') }}" method="POST">
             @csrf
-            <!-- Input untuk transaksi -->
             <div id="transactions-container">
-                    <div class="form-group mb-3">
-                        <label for="jenis_transaksi">Kode Barang</label>
-                        <input type="text" name="kode_brg" class="form-control" required>
-                    </div>   
-                    <div class="form-group mb-3">
-                        <label for="jenis_transaksi">Nama Barang</label>
-                        <input type="text" name="nama_brg" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="jenis_transaksi">Stock</label>
-                        <input type="text" name="stock" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="harga_satuan">Harga Satuan</label>
-                        <input type="text" name="harga_satuan" class="form-control rupiah" required>
-                    </div>
+                <div class="form-group mb-3">
+                    <label for="kode_brg">Kode Barang</label>
+                    <input type="text" name="kode_brg" class="form-control" required>
+                </div>   
+                <div class="form-group mb-3">
+                    <label for="nama_brg">Nama Barang</label>
+                    <input type="text" name="nama_brg" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="stock">Stock</label>
+                    <input type="number" name="stock" class="form-control" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="harga_satuan">Harga Satuan</label>
+                    <input type="text" name="harga_satuan" class="form-control rupiah" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control" required>
                 </div>
             </div>
-    
-            <!-- Tombol submit -->
+        
             <button type="submit" class="btn btn-primary mt-3">Simpan</button>
         </form>
     </div>
+    
     
 <!-- JavaScript untuk memformat input menjadi Rp -->
 <script>
