@@ -123,7 +123,7 @@
     }
 
     /* Show fixed-plugin if screen width is 900px or more */
-    @media (min-width: 1024px) {
+    @media (min-width: 1200px) {
         .fixed-plugin {
             display: block;
         }
@@ -133,7 +133,7 @@
     // For cases when page is loaded with a width below 900px, we need to toggle visibility on resize
     window.addEventListener('resize', function() {
         var fixedPlugin = document.querySelector('.fixed-plugin');
-        if (window.innerWidth > 1024) {
+        if (window.innerWidth > 1200) {
             fixedPlugin.style.display = 'none'; // Hide when screen is smaller than 900px
         } else {
             fixedPlugin.style.display = 'block'; // Show when screen is 900px or larger
@@ -143,7 +143,7 @@
     // Initial check on page load
     document.addEventListener('DOMContentLoaded', function() {
         var fixedPlugin = document.querySelector('.fixed-plugin');
-        if (window.innerWidth > 1024) {
+        if (window.innerWidth > 1200) {
             fixedPlugin.style.display = 'none';
         } else {
             fixedPlugin.style.display = 'block';
