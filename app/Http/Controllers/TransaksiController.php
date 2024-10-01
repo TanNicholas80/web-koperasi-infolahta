@@ -53,12 +53,14 @@ class TransaksiController extends Controller
             'jumlah.*' => 'required|integer|min:1',
             'nama_anggota' => 'required|string|max:255',
             'jenis_transaksi' => 'required|in:debet,kredit',
+            'tanggal_transaksi' => 'required|date'
         ]);
 
         $dataBarangIds = $request->data_barang_id;
         $jumlahs = $request->jumlah;
         $nama_anggota = $request->nama_anggota;
         $jenis_transaksi = $request->jenis_transaksi;
+        $tanggal_transaksi = $request->tanggal_transaksi;
 
         foreach ($dataBarangIds as $index => $dataBarangId) {
             $barang = DataBarang::findOrFail($dataBarangId);
@@ -74,6 +76,7 @@ class TransaksiController extends Controller
                 'total_harga' => $total_harga,
                 'nama_anggota' => $nama_anggota,  // Add this
                 'jenis_transaksi' => $jenis_transaksi,  // Add this
+                'tanggal_transaksi' => $tanggal_transaksi,
             ]);
 
             // Update stock
