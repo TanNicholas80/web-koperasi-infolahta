@@ -22,7 +22,7 @@ class SessionsController extends Controller
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
-            return redirect('/user-profile')->with(['success' => 'You are logged in.']);
+            return redirect()->route('kasInduk.index')->with(['success' => 'You are logged in.']);
         } else {
 
             return back()->withErrors(['email' => 'Email or password invalid.']);
