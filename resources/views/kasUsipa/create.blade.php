@@ -137,88 +137,99 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const transactionsContainer = document.getElementById('transactions-container');
+    const transactionsContainer = document.getElementById('transactions-container');
 
-        function updateTransactionFields(transactionGroup) {
-            const kasMasukFields = transactionGroup.querySelector('.kas-masuk-fields');
-            const kasKeluarFields = transactionGroup.querySelector('.kas-keluar-fields');
-            const statusSelect = transactionGroup.querySelector(
-                'select[name^="transactions"][name$="[status_usipa]"]'
-            ); // Ambil status di dalam grup transaksi tersebut
+    function updateTransactionFields(transactionGroup) {
+        const kasMasukFields = transactionGroup.querySelector('.kas-masuk-fields');
+        const kasKeluarFields = transactionGroup.querySelector('.kas-keluar-fields');
+        const statusSelect = transactionGroup.querySelector(
+            'select[name^="transactions"][name$="[status_usipa]"]'
+        );
 
-            const status = statusSelect.value;
+        const status = statusSelect.value;
 
-            if (status === 'KM') {
-                kasMasukFields.style.display = 'block';
-                kasKeluarFields.style.display = 'none';
+        if (status === 'KM') {
+            kasMasukFields.style.display = 'block';
+            kasKeluarFields.style.display = 'none';
 
-                // Enable kas masuk fields and disable kas keluar fields
-                kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
-                kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
-            } else if (status === 'KK') {
-                kasMasukFields.style.display = 'none';
-                kasKeluarFields.style.display = 'block';
+            kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
+            kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
+        } else if (status === 'KK') {
+            kasMasukFields.style.display = 'none';
+            kasKeluarFields.style.display = 'block';
 
-                // Enable kas keluar fields and disable kas masuk fields
-                kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
-                kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
-            }
+            kasMasukFields.querySelectorAll('input, select').forEach(input => input.disabled = true);
+            kasKeluarFields.querySelectorAll('input, select').forEach(input => input.disabled = false);
         }
 
-        // Function to initialize each transaction group with status change handling
-        function initializeTransactionGroup(transactionGroup) {
-            const statusSelect = transactionGroup.querySelector(
-                'select[name^="transactions"][name$="[status_usipa]"]');
-            statusSelect.addEventListener('change', function() {
-                updateTransactionFields(transactionGroup);
-            });
+        // Tambahkan class 'rupiah' ke input debet dan kredit
+        const debetInput = transactionGroup.querySelector('input[name^="transactions"][name$="[debet_transaction_usipa]"]');
+        const kreditInput = transactionGroup.querySelector('input[name^="transactions"][name$="[kredit_transaction_usipa]"]');
+        if (debetInput) debetInput.classList.add('rupiah');
+        if (kreditInput) kreditInput.classList.add('rupiah');
+    }
 
-            // Initial setup
+    // Function to initialize each transaction group with status change handling
+    function initializeTransactionGroup(transactionGroup) {
+        const statusSelect = transactionGroup.querySelector(
+            'select[name^="transactions"][name$="[status_usipa]"]');
+        statusSelect.addEventListener('change', function() {
             updateTransactionFields(transactionGroup);
-        }
-
-        transactionsContainer.addEventListener('click', function(event) {
-            if (event.target && event.target.matches('.add-transaction')) {
-                const transactionGroups = document.querySelectorAll('.transaction-group');
-                const lastTransactionGroup = transactionGroups[transactionGroups.length - 1];
-
-                if (!lastTransactionGroup) return;
-
-                const newTransactionGroup = lastTransactionGroup.cloneNode(true);
-
-                // Clear input values for the new transaction group
-                const inputs = newTransactionGroup.querySelectorAll('input');
-                inputs.forEach(input => input.value = '');
-
-                const index = transactionGroups.length; // Update index dynamically for new transaction
-
-                newTransactionGroup.querySelectorAll('input, select').forEach(field => {
-                    const name = field.name;
-
-                    // Find the part of the name that contains the index using regex to locate digits
-                    const nameParts = name.match(/^transactions\[(\d+)\](.*)$/);
-
-                    if (nameParts) {
-                        // Reconstruct the name with the updated index
-                        const newName = `transactions[${index}]${nameParts[2]}`;
-                        field.name = newName;
-                    }
-                });
-
-                transactionsContainer.appendChild(newTransactionGroup);
-
-                // Initialize the new transaction group with status change handling
-                initializeTransactionGroup(newTransactionGroup);
-            }
         });
 
-        // Initialize existing transaction groups on page load
-        const initialTransactionGroups = document.querySelectorAll('.transaction-group');
-        initialTransactionGroups.forEach(group => initializeTransactionGroup(group));
+        // Initial setup
+        updateTransactionFields(transactionGroup);
 
+        // Initialize rupiah formatting on relevant inputs
+        initializeRupiahFormatting(transactionGroup);
+    }
+
+    function initializeRupiahFormatting(transactionGroup) {
+        const rupiahInputs = transactionGroup.querySelectorAll('.rupiah');
+        rupiahInputs.forEach(input => {
+            input.addEventListener('keyup', function(e) {
+                input.value = formatRupiah(this.value, 'Rp');
+            });
+
+            input.addEventListener('blur', function() {
+                input.value = cleanRupiah(this.value);
+            });
+        });
+    }
+
+    transactionsContainer.addEventListener('click', function(event) {
+        if (event.target && event.target.matches('.add-transaction')) {
+            const transactionGroups = document.querySelectorAll('.transaction-group');
+            const lastTransactionGroup = transactionGroups[transactionGroups.length - 1];
+
+            if (!lastTransactionGroup) return;
+
+            const newTransactionGroup = lastTransactionGroup.cloneNode(true);
+
+            const inputs = newTransactionGroup.querySelectorAll('input');
+            inputs.forEach(input => input.value = '');
+
+            const index = transactionGroups.length;
+
+            newTransactionGroup.querySelectorAll('input, select').forEach(field => {
+                const name = field.name;
+                const nameParts = name.match(/^transactions\[(\d+)\](.*)$/);
+
+                if (nameParts) {
+                    const newName = `transactions[${index}]${nameParts[2]}`;
+                    field.name = newName;
+                }
+            });
+
+            transactionsContainer.appendChild(newTransactionGroup);
+
+            initializeTransactionGroup(newTransactionGroup);
+        }
     });
 
-    // Function untuk memformat angka ke format rupiah
+    const initialTransactionGroups = document.querySelectorAll('.transaction-group');
+    initialTransactionGroups.forEach(group => initializeTransactionGroup(group));
+
     function formatRupiah(angka, prefix) {
         var numberString = angka.replace(/[^,\d]/g, '').toString(),
             split = numberString.split(','),
@@ -226,7 +237,6 @@
             rupiah = split[0].substr(0, sisa),
             ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        // Menambahkan titik jika yang diinput sudah menjadi angka ribuan
         if (ribuan) {
             separator = sisa ? '.' : '';
             rupiah += separator + ribuan.join('.');
@@ -236,31 +246,18 @@
         return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
     }
 
-    // Menghapus format rupiah untuk keperluan pengiriman data ke server
     function cleanRupiah(value) {
         return value.replace(/[^,\d]/g, '');
     }
 
-    // Event listener untuk input class 'rupiah'
-    const rupiahInputs = document.querySelectorAll('.rupiah');
-
-    rupiahInputs.forEach(input => {
-        input.addEventListener('keyup', function(e) {
-            input.value = formatRupiah(this.value, 'Rp');
-        });
-
-        input.addEventListener('blur', function() {
-            // Pastikan nilai tanpa format yang dikirim ke server
-            input.value = cleanRupiah(this.value);
-        });
-    });
-
-    // Form submit handler untuk memastikan format yang dikirim adalah angka murni
     const form = document.querySelector('form');
     form.addEventListener('submit', function() {
+        const rupiahInputs = document.querySelectorAll('.rupiah');
         rupiahInputs.forEach(input => {
             input.value = cleanRupiah(input.value);
         });
     });
+});
+
 </script>
 @endsection
