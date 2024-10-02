@@ -46,47 +46,51 @@ class TransaksiController extends Controller
     // }
 
     public function store(Request $request)
-    {
-        // Validate input array and new fields
-        $request->validate([
-            'data_barang_id.*' => 'required|exists:data_barangs,id',
-            'jumlah.*' => 'required|integer|min:1',
-            'nama_anggota' => 'required|string|max:255',
-            'jenis_transaksi' => 'required|in:debet,kredit',
-            'tanggal_transaksi' => 'required|date'
+{
+    // Cek data yang dikirim
+    \Log::info($request->all());
+    
+    // Validasi input
+    $request->validate([
+        'data_barang_id.*' => 'required|exists:data_barangs,id',
+        'jumlah.*' => 'required|integer|min:1',
+        'nama_anggota' => 'required|string|max:255',
+        'jenis_transaksi' => 'required|in:debit,kredit',
+        'tanggal_transaksi' => 'required|date'
+    ]);
+
+    $dataBarangIds = $request->data_barang_id;
+    $jumlahs = $request->jumlah;
+    $nama_anggota = $request->nama_anggota;
+    $jenis_transaksi = $request->jenis_transaksi;
+    $tanggal_transaksi = $request->tanggal_transaksi;
+
+    foreach ($dataBarangIds as $index => $dataBarangId) {
+        $barang = DataBarang::findOrFail($dataBarangId);
+        $jumlah = $jumlahs[$index];
+
+        // Hitung total harga
+        $total_harga = $barang->harga_satuan * $jumlah;
+
+        // Simpan data transaksi
+        Transaksi::create([
+            'data_barang_id' => $dataBarangId,
+            'jumlah' => $jumlah,
+            'total_harga' => $total_harga,
+            'nama_anggota' => $nama_anggota, 
+            'jenis_transaksi' => $jenis_transaksi,
+            'tanggal_transaksi' => $tanggal_transaksi,
         ]);
 
-        $dataBarangIds = $request->data_barang_id;
-        $jumlahs = $request->jumlah;
-        $nama_anggota = $request->nama_anggota;
-        $jenis_transaksi = $request->jenis_transaksi;
-        $tanggal_transaksi = $request->tanggal_transaksi;
-
-        foreach ($dataBarangIds as $index => $dataBarangId) {
-            $barang = DataBarang::findOrFail($dataBarangId);
-            $jumlah = $jumlahs[$index];
-
-            // Calculate total price
-            $total_harga = $barang->harga_satuan * $jumlah;
-
-            // Create new transaction
-            Transaksi::create([
-                'data_barang_id' => $dataBarangId,
-                'jumlah' => $jumlah,
-                'total_harga' => $total_harga,
-                'nama_anggota' => $nama_anggota,  // Add this
-                'jenis_transaksi' => $jenis_transaksi,  // Add this
-                'tanggal_transaksi' => $tanggal_transaksi,
-            ]);
-
-            // Update stock
-            $barang->update([
-                'stock' => $barang->stock - $jumlah
-            ]);
-        }
-
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan.');
+        // Update stock barang
+        $barang->update([
+            'stock' => $barang->stock - $jumlah
+        ]);
     }
+
+    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan.');
+}
+
 
 
     // public function index()
